@@ -10,16 +10,22 @@ const helpers = require('./helpers.js')
 router.use(express.json())
 
 //ruta para pedir todos los pokemones, aun falta 
-router.get('/', (req,res)=>{
-    helpers.bringPokes()
-    res.send('por ahora solo trae name y url')
+router.get('/', async (req,res)=>{
+    let pokemons = await helpers.bringPokes()
+    // console.log(pokemons)
+    res.send(pokemons)
 })
 
+//ruta para pedir un pokemon específico por ID, listo!
 router.get('/:id', async (req,res)=>{
     const {id} = req.params
     try{
         let pokemon = await helpers.findPoke(id)
-        res.send(pokemon)
+
+        return pokemon.message 
+            ? res.status(404).send(pokemon.message) 
+            : res.send(pokemon)
+
     }catch(err){
         res.status(500).send(`Server error: ${err}`)
     }
