@@ -16,17 +16,26 @@
 //         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
 //         \  \ `_.   \_ __\ /__ _/   .-` /  /
 //     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
+//                       `=---=' 
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const { default: axios } = require('axios');
+const axios = require('axios');
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn, Type } = require('./src/db.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, async () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
+    let types = await axios.get('https://pokeapi.co/api/v2/type')
+    types = types.data.results.map(type => ({
+      name: type.name
+    }))
+    let prom = types.map(type=>Type.create(type))
     
-
+    Promise.all(prom)
+      .then(res => {
+        console.log('Tipos precargados!') 
+      }) 
+    
   });
 });

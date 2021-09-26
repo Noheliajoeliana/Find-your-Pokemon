@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize'); 
 const S = Sequelize;
 
 // Exportamos una funcion que define el modelo
@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
         name: {
             type: S.DataTypes.STRING,
             allowNull: false,
-            unique:true
+            // unique:true
         }
     })
 }

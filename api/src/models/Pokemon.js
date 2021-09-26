@@ -24,9 +24,9 @@ module.exports = (sequelize) => {
     },
     img : {
       type: S.DataTypes.STRING,
-      validate: {
-        isUrl: true
-      }
+      // validate: {
+      //   isUrl: true
+      // }
     }
     // life: {
 
