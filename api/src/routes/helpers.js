@@ -1,5 +1,5 @@
 const axios = require('axios') 
-const {Pokemon} = require('../db.js')
+const {Pokemon, Type} = require('../db.js')
 module.exports = { 
     bringPokes: async function(){
         const datos1 = await axios.get('https://pokeapi.co/api/v2/pokemon')
@@ -33,5 +33,34 @@ module.exports = {
         })
         await poke.addTypes(types) //para añadir los tipos a la tabla intermedia 
        
+    },
+
+    findPoke: async function(id){
+        
+        let pokemon 
+        if(id.length > 5){ //si el id coincide con db
+
+            pokemon = (await Pokemon.findByPk(id, {
+                include: Type
+            })).toJSON()
+        
+        }else{ //si el id coincide con API
+
+            let obj = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)).data
+            
+            pokemon = {
+                name: obj.name,
+                height: obj.height,
+                id: id,
+                weight: obj.weight,
+                img: obj.sprites.other.dream_world.front_default,
+                types: obj.types.map(t=>{
+                    let arr = t.type.url.split('/')
+                    return Number(arr[arr.length-2])
+                })
+            }
+        }
+        
+        return pokemon 
     }
 }

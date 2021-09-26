@@ -15,6 +15,17 @@ router.get('/', (req,res)=>{
     res.send('por ahora solo trae name y url')
 })
 
+router.get('/:id', async (req,res)=>{
+    const {id} = req.params
+    try{
+        let pokemon = await helpers.findPoke(id)
+        res.send(pokemon)
+    }catch(err){
+        res.status(500).send(`Server error: ${err}`)
+    }
+})
+
+//ruta para postear pokemon en db, listo!
 router.post('/', (req,res)=>{
     const pokemon = req.body
     try{
@@ -24,5 +35,7 @@ router.post('/', (req,res)=>{
         res.status(500).send('Error de server: ', err)
     }
 })
+
+
 
 module.exports = router
