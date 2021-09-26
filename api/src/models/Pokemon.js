@@ -23,22 +23,25 @@ module.exports = (sequelize) => {
       type: S.DataTypes.INTEGER
     },
     img : {
-      type: S.DataTypes.STRING,
+      type: S.DataTypes.TEXT,
       // validate: {
       //   isUrl: true
       // }
+    },
+    gif : {
+      type: S.DataTypes.TEXT
+    },
+    hp: { //vida
+      type: S.DataTypes.INTEGER
+    },
+    attack: {
+      type: S.DataTypes.INTEGER
+    },
+    defense: {
+      type: S.DataTypes.INTEGER
+    },
+    speed: {
+      type: S.DataTypes.INTEGER
     }
-    // life: {
-
-    // },
-    // strength: {
-
-    // },
-    // defense: {
-
-    // },
-    // velocity: {
-
-    // },
   });
 };
