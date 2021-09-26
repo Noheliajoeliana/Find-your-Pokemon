@@ -1,14 +1,23 @@
 const express = require('express')
 const router = express.Router()
-const { Pokemon, Type } = require('../db.js')
+const {Type } = require('../db.js')
 
 
-//esto es: /pokemons...
+//esto es: /types...
 
 router.use(express.json())
 
-router.get('/', (req,res)=>{
-    
+//Ruta para obtener todos los types desde la base de datos, listo!
+router.get('/', async (req,res)=>{
+    try{
+        let types = await Type.findAll({
+            attributes: ['name']
+        })
+        types = types.map(type => type.name)
+        return res.send(types)
+    }catch(err){
+        return res.status(500).send(`Server error: ${err}`)
+    }
 })
 
 
