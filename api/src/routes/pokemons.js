@@ -15,7 +15,11 @@ router.get('/', async (req,res)=>{
     try{
         if(!name){
             let pokemons = await helpers.bringAllPokes()
-            return res.send(pokemons)
+
+            return pokemons.message 
+                ? res.status(500).send('Error en API o DB')
+                : res.send(pokemons)
+
         }else{
             let pokemon = await helpers.findPokeByName(name)
             

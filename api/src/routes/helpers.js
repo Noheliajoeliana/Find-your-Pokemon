@@ -14,24 +14,48 @@ function mapTypes(arr){
 
 module.exports = { 
     bringAllPokes: async function(){
-        
-        const datos1 = (await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=40')).data
 
-        const pokesArr = datos1.results
+        try{
+            // const datos1 = (await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=40')).data
+            // console.log(datos2)
+            const datos1 = (await axios.get('https://pokeapi.co/api/v2/pokemon')).data
+    
+            const pokesArr = datos1.results
+    
+            let arr = []
+            for(let i=0; i<pokesArr.length;i++){
+                arr.push(axios.get(pokesArr[i].url))          
+            }    
+    
+            let resultAPI = (await Promise.all(arr)).map(poke=>{
+                
+                return ({
+                    id: poke.data.id,
+                    name: poke.data.name,
+                    types: filterTypesFromURL(poke.data.types),
+                    img: poke.data.sprites.other.dream_world.front_default
+                })
+            })
+    
+            let db = await Pokemon.findAll({
+                attributes: ['name', 'id', 'img'],
+                include: {
+                    model: Type
+                }
+            })
+            let resultDB = db.map(poke=>{
+                return ({
+                    id: poke.id,
+                    name:poke.name,
+                    img:poke.img,
+                    types: mapTypes(poke.types)
+                })
+            })
+            return [...resultDB,...resultAPI]
 
-        let arr = []
-        for(let i=0; i<pokesArr.length;i++){
-            arr.push(axios.get(pokesArr[i].url))          
-        }        
-         
-        let result = (await Promise.all(arr)).map(poke=>{
-            return ({
-            id: poke.data.id,
-            name: poke.data.name,
-            types: filterTypesFromURL(poke.data.types),
-            img: poke.data.sprites.other.dream_world.front_default
-        })})
-        return result
+        }catch(err){
+            return err
+        }
         
     },
 
