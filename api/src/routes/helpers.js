@@ -14,26 +14,23 @@ function mapTypes(arr){
 
 module.exports = { 
     bringAllPokes: async function(){
-        const datos1 = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=40')
+        
+        const datos1 = (await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=40')).data
 
-        //Solo descomentar si no dejan usar el limit
-        // const next = datos1.data.next
-        // const pokes1 = datos1.data.results
-        // const datos2 = await axios.get(next)
-        // const pokes2 = datos2.data.results 
-        // const pokesArr = [...pokes1,...pokes2] 
+        const pokesArr = datos1.results
 
-        const pokesArr = datos1.data.results
-
-        // const arr = pokesArr.map(poke => axios.get(poke.url))
         let arr = []
         for(let i=0; i<pokesArr.length;i++){
-            arr.push(axios.get(pokesArr[i].url))
-                // let pokemon = await res.data            
-        
+            arr.push(axios.get(pokesArr[i].url))          
         }        
-        let result = await Promise.all(arr)
-
+         
+        let result = (await Promise.all(arr)).map(poke=>{
+            return ({
+            id: poke.data.id,
+            name: poke.data.name,
+            types: filterTypesFromURL(poke.data.types),
+            img: poke.data.sprites.other.dream_world.front_default
+        })})
         return result
         
     },

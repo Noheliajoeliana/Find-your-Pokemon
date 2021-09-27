@@ -15,7 +15,6 @@ router.get('/', async (req,res)=>{
     try{
         if(!name){
             let pokemons = await helpers.bringAllPokes()
-            // console.log(pokemons)
             return res.send(pokemons)
         }else{
             let pokemon = await helpers.findPokeByName(name)
