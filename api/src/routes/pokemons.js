@@ -9,32 +9,10 @@ const helpers = require('./helpers.js')
 
 router.use(express.json())
 
-//ruta para pedir todos los pokemones, aun falta 
-// router.get('/', async (req,res)=>{
-//     const {name} = req.query
-//     try{
-//         if(!name){
-//             let pokemons = await helpers.bringAllPokes()
-
-//             return pokemons.message 
-//                 ? res.status(500).send('Error en API o DB')
-//                 : res.send(pokemons)
-
-//         }else{
-//             let pokemon = await helpers.findPokeByName(name)
-            
-//             return pokemon.message 
-//                 ? res.status(404).send('No pudimos encontrar el pokemon solicitado')
-//                 : res.send(pokemon)
-//         }
-//     }catch(err){
-//         return res.status(500).send(`Server error: ${err}`)
-//     }
-// })
-
+//ruta para pedir todos los pokemones y para buscar por name por query, listo!!
 router.get('/', helpers.findPokeByName)
 
-//ruta para pedir un pokemon específico por ID, listo!
+//ruta para pedir un pokemon específico por ID (params), listo!
 router.get('/:id', helpers.findPokeByID)
 
 

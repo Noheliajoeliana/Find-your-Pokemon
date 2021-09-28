@@ -13,70 +13,110 @@ function mapTypes(arr){
 }
 
 module.exports = { 
-    prueba: async(req,res) => {
-        const pApi = await axios.get("https://pokeapi.co/api/v2/pokemon")
-        let datosPApi = pApi.data.results
-        let pData = []
-        for (p of datosPApi) {
-            let subReq = p.url
-            let subReqPoke = await axios.get(`${subReq}`)
-            pData.push({
-                id:subReqPoke.data.id,
-                name: subReqPoke.data.name,
-                type: subReqPoke.data.types.map(e => e.type.name),
-                image: subReqPoke.data.sprites.other.dream_world.front_default,
-                attack: subReqPoke.data.stats[1].base_stat,
-            })
+
+    findPokeByName: async function(req, res){
+        let {name} = req.query
+        
+        if(!name){
+            
+            try{
+                const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=40')).data.results
+               
+                let resultAPI = []
+                for(let poke of pokesArr){
+                    let subreq = await axios.get(poke.url)
+                    resultAPI.push({
+                        id: subreq.data.id,
+                        name: subreq.data.name,
+                        types: filterTypesFromURL(subreq.data.types),
+                        img: subreq.data.sprites.other.dream_world.front_default
+                    })
+                }
+
+                //Esto me parece más eficiente, pero no me funciona
+                // let promArr = []
+                // for(let p of pokesArr){
+                //     promArr.push(axios.get(p.url))
+                // }
+                // let resultAPI = (await Promise.all(promArr)).map(poke => {
+                //     return ({
+                //         id: poke.data.id,
+                //         name: poke.data.name,
+                //         types: filterTypesFromURL(poke.data.types),
+                //         img: poke.data.sprites.other.dream_world.front_default
+                //     })
+                // })
+                   
+                let db = await Pokemon.findAll({
+                    attributes: ['name', 'id', 'img'],
+                    include: {
+                        model: Type
+                    }
+                })
+    
+                let resultDB = db.map(poke=>{
+                    return ({
+                        id: poke.id,
+                        name: poke.name,
+                        img:poke.img,
+                        types: mapTypes(poke.types)
+                    })
+                })
+                return res.send([...resultDB,...resultAPI]) 
+        
+            }catch(err){
+                return res.status(500).send(`Server error: ${err}`)
+            }
         }
-        res.status(200).send(pData)
-    },
-    bringAllPokes: async function(){
 
         try{
-    
-            const datos1 = (await axios.get('https://pokeapi.co/api/v2/pokemon')).data
-           
-            const pokesArr = datos1.results
-    
-            // const promArr = pokesArr.map(poke => axios.get(poke.url))
-            let promArr = []
-            for(let i=0; i<pokesArr.length; i++){
-                promArr.push(axios.get(pokesArr[i].url))
-            }
-
-            let resultAPI = (await Promise.all(promArr)).map(poke => {
-                return ({
-                    id: poke.data.id,
-                    name: poke.data.name,
-                    types: filterTypesFromURL(poke.data.types),
-                    img: poke.data.sprites.other.dream_world.front_default
-                })
-            })
-
-
-            let db = await Pokemon.findAll({
-                attributes: ['name', 'id', 'img'],
+            name = name.toLowerCase()
+            let dataDB = await Pokemon.findAll({
+                where: {
+                    name: name
+                    },
                 include: {
                     model: Type
                 }
             })
 
-            let resultDB = db.map(poke=>{
+            let pokemonsDB = dataDB.map(poke=>{
                 return ({
                     id: poke.id,
-                    name: poke.name,
+                    name:poke.name,
                     img:poke.img,
                     types: mapTypes(poke.types)
                 })
             })
-            return [...resultDB,...resultAPI]
-    
+                
+                
+            let pokemonAPI
+            try{
+                let dataAPI = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)).data
+                pokemonAPI = {
+                    id: dataAPI.id,
+                    name: dataAPI.name,
+                    types: filterTypesFromURL(dataAPI.types),
+                    img: dataAPI.sprites.other.dream_world.front_default
+                }
+
+            }catch(err){
+                pokemonAPI = err
+            }
+
+            if(!pokemonsDB.length && pokemonAPI.name === 'Error') throw new Error('404')
+            if(pokemonAPI.name === 'Error') return res.send(pokemonsDB)
+                
+            return res.send([...pokemonsDB,pokemonAPI])
+            
         }catch(err){
-            return err
+            return err.message.includes('404') 
+                ? res.status(404).send('No se pudo encontrar al pokemon')
+                : res.status(500).send(`Server error: ${err}`)
         }
-        
     },
 
+    
     postPoke: async function(req, res){
         //pokemon trae: _nombre_, vida, ataque, defensa, velocidad, _altura_, _peso_, _imagen_ tipos(array)
         try{
@@ -95,7 +135,7 @@ module.exports = {
             await poke.addTypes(types) //para añadir los tipos a la tabla intermedia 
             return res.send('se posteó')
         }catch(err){
-            res.status(500).send('Error de server: ', err)
+            res.status(500).send(`Server error: ${err}`)
         }
        
     },
@@ -142,43 +182,16 @@ module.exports = {
                 : res.status(500).send(`Server error: ${err}`)
         }
     },
-    findPokeByName: async function(req, res){
-        const {name} = req.query
-
+    
+    getTypes: async function(req,res){
         try{
-                let dataDB = await Pokemon.findAll({
-                    where: {
-                        name: name
-                    },
-                    include: {
-                        model: Type
-                    }
-                }) 
-                let pokemons = dataDB.map(poke=>{
-                    return ({
-                        id: poke.id,
-                        name:poke.name,
-                        img:poke.img,
-                        types: mapTypes(poke.types)
-                    })
-                })
-                
-                let dataAPI = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)).data
-                console.log(dataAPI)
-                let pokemon = {
-                    id: dataAPI.id,
-                    name: dataAPI.name,
-                    types: filterTypesFromURL(dataAPI.types),
-                    img: dataAPI.sprites.other.dream_world.front_default
-                }
-                
-                
-                return res.send([...pokemons,pokemon])
-            
+            let types = await Type.findAll({
+                attributes: ['name','id']
+            })
+           
+            return res.send(types)
         }catch(err){
-            return err.message.includes('404') 
-                ? res.status(404).send('No se pudo encontrar al pokemon')
-                : res.status(500).send(`Server error: ${err}`)
+            return res.status(500).send(`Server error: ${err}`)
         }
     }
 }

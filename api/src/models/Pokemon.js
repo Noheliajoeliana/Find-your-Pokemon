@@ -17,31 +17,34 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     height: {
-      type: S.DataTypes.INTEGER
+      type: S.DataTypes.INTEGER,
+      allowNull: false,
     },
     weight: {
-      type: S.DataTypes.INTEGER
+      type: S.DataTypes.INTEGER,
+      allowNull: false,
     },
     img : {
       type: S.DataTypes.TEXT,
-      // validate: {
-      //   isUrl: true
-      // }
     },
     gif : {
       type: S.DataTypes.TEXT
     },
     hp: { //vida
-      type: S.DataTypes.INTEGER
+      type: S.DataTypes.INTEGER,
+      allowNull: false
     },
     attack: {
-      type: S.DataTypes.INTEGER
+      type: S.DataTypes.INTEGER,
+      allowNull: false
     },
     defense: {
-      type: S.DataTypes.INTEGER
+      type: S.DataTypes.INTEGER,
+      allowNull: false
     },
     speed: {
-      type: S.DataTypes.INTEGER
+      type: S.DataTypes.INTEGER,
+      allowNull: false
     }
   });
 };

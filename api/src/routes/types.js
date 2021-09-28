@@ -9,17 +9,7 @@ const helpers = require('./helpers.js')
 router.use(express.json())
 
 //Ruta para obtener todos los types desde la base de datos, listo!
-router.get('/', async (req,res)=>{
-    try{
-        let types = await Type.findAll({
-            attributes: ['name','id']
-        })
-       
-        return res.send(types)
-    }catch(err){
-        return res.status(500).send(`Server error: ${err}`)
-    }
-})
+router.get('/', helpers.getTypes)
 
 
 module.exports = router
