@@ -1,7 +1,5 @@
-const { default: axios } = require('axios')
 const express = require('express')
 const router = express.Router()
-const { Pokemon, Type } = require('../db.js')
 const helpers = require('./helpers.js')
 
 

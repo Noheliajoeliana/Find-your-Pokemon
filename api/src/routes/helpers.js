@@ -4,12 +4,20 @@ const {Pokemon, Type} = require('../db.js')
 function filterTypesFromURL(arr){
     return arr.map(t=>{
         let arr = t.type.url.split('/')
-        return Number(arr[arr.length-2])
+        return {
+            name: t.type.name,
+            id: Number(arr[arr.length-2])
+        }
     })
 }
 
 function mapTypes(arr){
-    return arr.map(type => Number(type.id))
+    return arr.map(type => {
+        return {
+            name: type.name,
+            id: Number(type.id)
+        }
+    })
 }
 
 module.exports = { 
@@ -20,35 +28,38 @@ module.exports = {
         if(!name){
             
             try{
-                const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=40')).data.results
+                // const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=40')).data.results
+                const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon')).data.results
                
-                let resultAPI = []
-                for(let poke of pokesArr){
-                    let subreq = await axios.get(poke.url)
-                    resultAPI.push({
-                        id: subreq.data.id,
-                        name: subreq.data.name,
-                        types: filterTypesFromURL(subreq.data.types),
-                        img: subreq.data.sprites.other.dream_world.front_default
-                    })
-                }
+                // let resultAPI = []
+                // for(let poke of pokesArr){
+                //     let subreq = await axios.get(poke.url)
+                //     resultAPI.push({
+                //         id: subreq.data.id,
+                //         name: subreq.data.name,
+                //         types: filterTypesFromURL(subreq.data.types),
+                //         img: subreq.data.sprites.other.dream_world.front_default,
+                //         hp: subreq.data.stats[0].base_stat
+                //     })
+                // }
 
                 //Esto me parece más eficiente, pero no me funciona
-                // let promArr = []
-                // for(let p of pokesArr){
-                //     promArr.push(axios.get(p.url))
-                // }
-                // let resultAPI = (await Promise.all(promArr)).map(poke => {
-                //     return ({
-                //         id: poke.data.id,
-                //         name: poke.data.name,
-                //         types: filterTypesFromURL(poke.data.types),
-                //         img: poke.data.sprites.other.dream_world.front_default
-                //     })
-                // })
+                let promArr = []
+                for(let p of pokesArr){
+                    promArr.push(axios.get(p.url))
+                }
+                let resultAPI = (await Promise.all(promArr)).map(poke => {
+                    console.log(poke.data)
+                    return ({
+                        id: poke.data.id,
+                        name: poke.data.name,
+                        types: filterTypesFromURL(poke.data.types),
+                        img: poke.data.sprites.other.dream_world.front_default
+                    })
+                })
                    
                 let db = await Pokemon.findAll({
-                    attributes: ['name', 'id', 'img'],
+                    attributes: ['name', 'id', 'img', 'hp'],
                     include: {
                         model: Type
                     }
@@ -59,6 +70,7 @@ module.exports = {
                         id: poke.id,
                         name: poke.name,
                         img:poke.img,
+                        hp: poke.hp,
                         types: mapTypes(poke.types)
                     })
                 })
@@ -143,6 +155,7 @@ module.exports = {
     findPokeByID: async function(req, res){
         const {id} = req.params
         try{
+            console.log('buscando en db')
             let pokemon 
             if(id.length > 10){ //si el id coincide con db
                 
@@ -154,8 +167,8 @@ module.exports = {
                         model: Type
                     }
                 })).toJSON()
-                pokemon = {...pokemon, types: mapTypes(pokemon.types)}
                 console.log(pokemon)
+                pokemon = {...pokemon, types: mapTypes(pokemon.types)}
                 
             }else{ //si el id coincide con API
                 
@@ -177,6 +190,7 @@ module.exports = {
             }
             return res.send(pokemon) 
         }catch(err){
+            console.log(err)
             return err.name.includes('Error') 
                 ? res.status(404).send('No se pudo encontrar al pokemon')
                 : res.status(500).send(`Server error: ${err}`)
