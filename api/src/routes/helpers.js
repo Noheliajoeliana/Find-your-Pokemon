@@ -49,12 +49,13 @@ module.exports = {
                     promArr.push(axios.get(p.url))
                 }
                 let resultAPI = (await Promise.all(promArr)).map(poke => {
-                    console.log(poke.data)
+                    // console.log(poke.data)
                     return ({
                         id: poke.data.id,
                         name: poke.data.name,
                         types: filterTypesFromURL(poke.data.types),
-                        img: poke.data.sprites.other.dream_world.front_default
+                        img: poke.data.sprites.other.dream_world.front_default,
+                        hp: poke.data.stats[0].base_stat
                     })
                 })
                    
@@ -123,7 +124,8 @@ module.exports = {
             
         }catch(err){
             return err.message.includes('404') 
-                ? res.status(404).send('No se pudo encontrar al pokemon')
+                // ? res.status(404).send('No se pudo encontrar al pokemon')
+                ? res.status(200).send('No se pudo encontrar al pokemon')
                 : res.status(500).send(`Server error: ${err}`)
         }
     },

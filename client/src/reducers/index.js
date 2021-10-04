@@ -7,8 +7,10 @@ import {GET_POKEMONS,
     SORT_POKES_NAME, 
     SORT_POKES_FUERZA,
     CLEAR,
-    FILTER_TYPES} from '../actions'
-import { sortByName, sortByFuerza, filterTypes } from './helpers'
+    FILTER_TYPES,
+    FILTER_DB_API,
+    GET_POKE_NAME} from '../actions'
+import { sortByName, sortByFuerza, filterTypes, filterDB } from './helpers'
 
 const initialState = {
     allPokemons: [],
@@ -41,8 +43,18 @@ function Reducer(state = initialState, action){
                 loading: {
                     loading: false,
                     msg: ''
-                }
+                },
+                pokemons: [...state.allPokemons]
     
+            }
+        case GET_POKE_NAME:
+            return {
+                ...state,
+                pokemons: action.payload,
+                loading: {
+                    loading: false,
+                    msg: ''
+                }
             }
         case CREATE_POKEMON:
             return {
@@ -66,9 +78,11 @@ function Reducer(state = initialState, action){
                 loading: {
                     loading: true,
                     msg: action.payload
-                }
+                },
+                pokemons: []
             }
         case SORT_POKES_NAME:
+            console.log(state.allPokemons)
             return {
                 ...state,
                 pokemons: sortByName(state.pokemons,action.payload)
@@ -79,9 +93,18 @@ function Reducer(state = initialState, action){
                 pokemons: sortByFuerza(state.pokemons,action.payload)
             }
         case FILTER_TYPES:
+            let filtrado1 = filterTypes(state.allPokemons,action.payload)
             return {
                 ...state,
-                pokemons: filterTypes(state.allPokemons,action.payload)
+                pokemons:  filtrado1.length ? filtrado1 : 'No hay pokemones que coincidan'
+            }
+            case FILTER_DB_API:
+            let filtrado2 = filterDB(state.allPokemons,action.payload)
+            console.log(filtrado2)
+            console.log(state.allPokemons)
+            return {
+                ...state,
+                pokemons: filtrado2.length ? filtrado2 : 'No hay pokemones que coincidan'
             }
         case CLEAR:
             return{

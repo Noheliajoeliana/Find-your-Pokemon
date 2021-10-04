@@ -13,6 +13,7 @@ export function sortByName(array,tipo){
 
 export function sortByFuerza(array,tipo){
     let copy = [...array]
+    console.log(tipo==='^')
     if(tipo==='^'){
         return copy.sort((a,b) => Number(a.hp)-Number(b.hp))
     }else{
@@ -27,4 +28,12 @@ export function filterTypes(arr,tipos){
         }
         return false
     })
+}
+
+export function filterDB(arr,tipo){
+    if(tipo === 'DB'){
+        return arr.filter(p=>(p.id).toString().length>10)
+    }else{
+        return arr.filter(p=>(p.id).toString().length<10)
+    }
 }

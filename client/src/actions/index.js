@@ -2,11 +2,13 @@ import axios from 'axios'
 
 export const GET_POKEMONS = 'GET_POKEMONS'
 export const GET_POKE_DETAILS = 'GET_POKE_DETAIL'
+export const GET_POKE_NAME = 'GET_POKE_NAME'
 export const CREATE_POKEMON = 'CREATE_POKEMON'
 export const GET_TYPES = 'GET_TYPES'
 export const SORT_POKES_NAME = 'SORT_POKES_NAME' 
 export const SORT_POKES_FUERZA = 'SORT_POKES_FUERZA' 
 export const FILTER_TYPES = 'FILTER_TYPES'
+export const FILTER_DB_API = 'FILTER_DB_API'
 export const CLEAR = 'CLEAR'
 export const LOADING = 'LOADING'
 
@@ -26,6 +28,15 @@ export function getPokeDetail(id){
         return axios.get(`http://localhost:3001/pokemons/${id}`)
                     .then(res=>res.data)
                     .then(res=>dispatch({type: GET_POKE_DETAILS, payload: res}))
+    }
+}
+
+export function getPokeName(name){
+    return function(dispatch){
+        dispatch({type: LOADING, payload: 'Buscando Pokémon...'})
+        return axios.get(`http://localhost:3001/pokemons?name=${name}`)
+                    .then(res=>res.data)
+                    .then(res=>dispatch({type: GET_POKE_NAME, payload: res}))
     }
 }
 
@@ -59,6 +70,10 @@ export function sortFuerza(tipo){
 
 export function filterTypes(types){
     return {type: FILTER_TYPES, payload: types}
+}
+
+export function filterDB(dbAPI){
+    return {type: FILTER_DB_API, payload: dbAPI}
 }
 
 export function clearAll(){
