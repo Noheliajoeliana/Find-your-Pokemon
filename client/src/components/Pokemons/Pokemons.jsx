@@ -1,12 +1,13 @@
 import React from "react"
-import { useState, useEffect } from "react"
+import {useEffect } from "react"
 import {  useSelector , useDispatch} from "react-redux"
-import { clearAll, getAllPokemons, sortAlf, sortFuerza, getTypes, filterTypes} from "../../actions"
+import {getAllPokemons} from "../../actions"
 import Pokemon from '../Pokemon/Pokemon.jsx'
+import Page from "../Page/Page"
 
 
 
-export default function Pokemons(params){
+export default function Pokemons({page, clickPage}){
     
     const dispatch = useDispatch()
 
@@ -20,7 +21,11 @@ export default function Pokemons(params){
         }
     })
     
-    let pokes = Array.isArray(pokemons) ? pokemons.map(poke => {
+    
+
+    let pokesPerPage = pokemons.slice(page*9-9,page*9)
+
+    let pokes = Array.isArray(pokesPerPage) ? pokesPerPage.map(poke => {
         return <Pokemon content={poke} />    
     }) : <p>{pokemons}</p>
 
@@ -30,6 +35,7 @@ export default function Pokemons(params){
             <h1>Contenedor de muchos pokemones </h1>
             {loading.loading && loading.msg}
             {pokes}
+            {Array.isArray(pokemons) && <Page cantPokes = {pokemons.length} clickPage={clickPage}/>}
         </div>
     )
 }

@@ -9,18 +9,14 @@ export default function PokeDetail(params){
     const pokemon = useSelector(state=>state.pokeDetail)
     const loading = useSelector(state=>state.loading)
     
-    console.log(pokemon)
-    console.log(!loading.loading)
     useEffect(() => {
         if(pokemon.id!==params.props.match.params.id && !loading.loading){
-            console.log('aqui')
             dispatch(getPokeDetail(params.props.match.params.id))
         }
     })
     
     let types
     if(pokemon.types){
-
         types = pokemon.types.map(t=>{
             return <span>{t.name} </span>
         })

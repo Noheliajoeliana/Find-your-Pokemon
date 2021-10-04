@@ -1,7 +1,6 @@
 import React,{useState} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {  createPokemon } from "../../actions"
-import { useEffect } from "react"
 
 export default function PokeDetail(params){
     

@@ -1,10 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { getAllPokemons } from "../../actions"
 
 
-export default function Landing(params){
+export default function Landing(){
     
 
     return(

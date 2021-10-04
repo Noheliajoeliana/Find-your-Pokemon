@@ -14,6 +14,7 @@ export default function Home(params){
     const [inputName,setInputName] = useState('')
     const [inputTypes,setInputTypes] = useState([])
     const [inputDBAPI,setInputDBAPI] = useState('')
+    const [page,setPage] = useState(1)
 
     const types = useSelector(state=>state.types)
 
@@ -47,13 +48,16 @@ export default function Home(params){
     }
     function filtTypes(e){
         e.preventDefault()
-        console.log(inputTypes.length)
-        if(inputTypes.length) dispatch(filterTypes(inputTypes))
-        if(inputDBAPI) dispatch(filterDB(inputDBAPI))
+        if(inputTypes.length>0) dispatch(filterTypes(inputTypes));
+        if(inputDBAPI) dispatch(filterDB(inputDBAPI));
+        setPage(1)
     }
     function search(e){
         e.preventDefault()
         dispatch(getPokeName(inputName))
+    }
+    function clickPage(e){
+        setPage(Number(e.target.id))
     }
 
     useEffect(()=>{
@@ -97,7 +101,7 @@ export default function Home(params){
             </div>
             <button onClick={clear}>Limpiar todos los filtros</button>
 
-            <Pokemons/>
+            <Pokemons page={page} clickPage={clickPage}/>
         </div>
     )
 }
