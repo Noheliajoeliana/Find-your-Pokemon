@@ -1,5 +1,4 @@
 import './App.css';
-import Pokemons from './components/Pokemons/Pokemons.jsx'
 import Landing from './components/Landing/Landing';
 import PokeDetail from './components/PokeDetail/PokeDetail.jsx'
 import Home from './components/Home/Home.jsx'

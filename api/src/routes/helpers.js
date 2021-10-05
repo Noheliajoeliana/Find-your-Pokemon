@@ -1,136 +1,136 @@
 const axios = require('axios') 
 const {Pokemon, Type} = require('../db.js')
 
-const pokes = [
-    {
-    name: "bulbasaur",
-    url: "https://pokeapi.co/api/v2/pokemon/1/"
-    },
-    {
-    name: "ivysaur",
-    url: "https://pokeapi.co/api/v2/pokemon/2/"
-    },
-    {
-    name: "venusaur",
-    url: "https://pokeapi.co/api/v2/pokemon/3/"
-    },
-    {
-    name: "charmander",
-    url: "https://pokeapi.co/api/v2/pokemon/4/"
-    },
-    {
-    name: "charmeleon",
-    url: "https://pokeapi.co/api/v2/pokemon/5/"
-    },
-    {
-    name: "charizard",
-    url: "https://pokeapi.co/api/v2/pokemon/6/"
-    },
-    {
-    name: "squirtle",
-    url: "https://pokeapi.co/api/v2/pokemon/7/"
-    },
-    {
-    name: "wartortle",
-    url: "https://pokeapi.co/api/v2/pokemon/8/"
-    },
-    {
-    name: "blastoise",
-    url: "https://pokeapi.co/api/v2/pokemon/9/"
-    },
-    {
-    name: "caterpie",
-    url: "https://pokeapi.co/api/v2/pokemon/10/"
-    },
-    {
-    name: "metapod",
-    url: "https://pokeapi.co/api/v2/pokemon/11/"
-    },
-    {
-    name: "butterfree",
-    url: "https://pokeapi.co/api/v2/pokemon/12/"
-    },
-    {
-    name: "weedle",
-    url: "https://pokeapi.co/api/v2/pokemon/13/"
-    },
-    {
-    name: "kakuna",
-    url: "https://pokeapi.co/api/v2/pokemon/14/"
-    },
-    {
-    name: "beedrill",
-    url: "https://pokeapi.co/api/v2/pokemon/15/"
-    },
-    {
-    name: "pidgey",
-    url: "https://pokeapi.co/api/v2/pokemon/16/"
-    },
-    {
-    name: "pidgeotto",
-    url: "https://pokeapi.co/api/v2/pokemon/17/"
-    },
-    {
-    name: "pidgeot",
-    url: "https://pokeapi.co/api/v2/pokemon/18/"
-    },
-    {
-    name: "rattata",
-    url: "https://pokeapi.co/api/v2/pokemon/19/"
-    },
-    {
-    name: "raticate",
-    url: "https://pokeapi.co/api/v2/pokemon/20/"
-    },
-    {
-    name: "spearow",
-    url: "https://pokeapi.co/api/v2/pokemon/21/"
-    },
-    {
-    name: "fearow",
-    url: "https://pokeapi.co/api/v2/pokemon/22/"
-    },
-    {
-    name: "ekans",
-    url: "https://pokeapi.co/api/v2/pokemon/23/"
-    },
-    {
-    name: "arbok",
-    url: "https://pokeapi.co/api/v2/pokemon/24/"
-    },
-    {
-    name: "pikachu",
-    url: "https://pokeapi.co/api/v2/pokemon/25/"
-    },
-    {
-    name: "raichu",
-    url: "https://pokeapi.co/api/v2/pokemon/26/"
-    },
-    {
-    name: "sandshrew",
-    url: "https://pokeapi.co/api/v2/pokemon/27/"
-    },
-    {
-    name: "sandslash",
-    url: "https://pokeapi.co/api/v2/pokemon/28/"
-    },
-    {
-    name: "nidoran-m",
-    url: "https://pokeapi.co/api/v2/pokemon/32/"
-    },
-    {
-    name: "nidorino",
-    url: "https://pokeapi.co/api/v2/pokemon/33/"
-    },
-    {
-    name: "nidoking",
-    url: "https://pokeapi.co/api/v2/pokemon/34/"
-    },
-    {
-    name: "clefairy",
-    url: "https://pokeapi.co/api/v2/pokemon/35/"
-    },
-    ]
+// const pokesArr = [
+//     {
+//     name: "bulbasaur",
+//     url: "https://pokeapi.co/api/v2/pokemon/1/"
+//     },
+//     {
+//     name: "ivysaur",
+//     url: "https://pokeapi.co/api/v2/pokemon/2/"
+//     },
+//     {
+//     name: "venusaur",
+//     url: "https://pokeapi.co/api/v2/pokemon/3/"
+//     },
+//     {
+//     name: "charmander",
+//     url: "https://pokeapi.co/api/v2/pokemon/4/"
+//     },
+//     {
+//     name: "charmeleon",
+//     url: "https://pokeapi.co/api/v2/pokemon/5/"
+//     },
+//     {
+//     name: "charizard",
+//     url: "https://pokeapi.co/api/v2/pokemon/6/"
+//     },
+//     {
+//     name: "squirtle",
+//     url: "https://pokeapi.co/api/v2/pokemon/7/"
+//     },
+//     {
+//     name: "wartortle",
+//     url: "https://pokeapi.co/api/v2/pokemon/8/"
+//     },
+//     {
+//     name: "blastoise",
+//     url: "https://pokeapi.co/api/v2/pokemon/9/"
+//     },
+//     {
+//     name: "caterpie",
+//     url: "https://pokeapi.co/api/v2/pokemon/10/"
+//     },
+//     {
+//     name: "metapod",
+//     url: "https://pokeapi.co/api/v2/pokemon/11/"
+//     },
+//     {
+//     name: "butterfree",
+//     url: "https://pokeapi.co/api/v2/pokemon/12/"
+//     },
+//     {
+//     name: "weedle",
+//     url: "https://pokeapi.co/api/v2/pokemon/13/"
+//     },
+//     {
+//     name: "kakuna",
+//     url: "https://pokeapi.co/api/v2/pokemon/14/"
+//     },
+//     {
+//     name: "beedrill",
+//     url: "https://pokeapi.co/api/v2/pokemon/15/"
+//     },
+//     {
+//     name: "pidgey",
+//     url: "https://pokeapi.co/api/v2/pokemon/16/"
+//     },
+//     {
+//     name: "pidgeotto",
+//     url: "https://pokeapi.co/api/v2/pokemon/17/"
+//     },
+//     {
+//     name: "pidgeot",
+//     url: "https://pokeapi.co/api/v2/pokemon/18/"
+//     },
+//     {
+//     name: "rattata",
+//     url: "https://pokeapi.co/api/v2/pokemon/19/"
+//     },
+//     {
+//     name: "raticate",
+//     url: "https://pokeapi.co/api/v2/pokemon/20/"
+//     },
+//     {
+//     name: "spearow",
+//     url: "https://pokeapi.co/api/v2/pokemon/21/"
+//     },
+//     {
+//     name: "fearow",
+//     url: "https://pokeapi.co/api/v2/pokemon/22/"
+//     },
+//     {
+//     name: "ekans",
+//     url: "https://pokeapi.co/api/v2/pokemon/23/"
+//     },
+//     {
+//     name: "arbok",
+//     url: "https://pokeapi.co/api/v2/pokemon/24/"
+//     },
+//     {
+//     name: "pikachu",
+//     url: "https://pokeapi.co/api/v2/pokemon/25/"
+//     },
+//     {
+//     name: "raichu",
+//     url: "https://pokeapi.co/api/v2/pokemon/26/"
+//     },
+//     {
+//     name: "sandshrew",
+//     url: "https://pokeapi.co/api/v2/pokemon/27/"
+//     },
+//     {
+//     name: "sandslash",
+//     url: "https://pokeapi.co/api/v2/pokemon/28/"
+//     },
+//     {
+//     name: "nidoran-m",
+//     url: "https://pokeapi.co/api/v2/pokemon/32/"
+//     },
+//     {
+//     name: "nidorino",
+//     url: "https://pokeapi.co/api/v2/pokemon/33/"
+//     },
+//     {
+//     name: "nidoking",
+//     url: "https://pokeapi.co/api/v2/pokemon/34/"
+//     },
+//     {
+//     name: "clefairy",
+//     url: "https://pokeapi.co/api/v2/pokemon/35/"
+//     },
+//     ]
 
 function filterTypesFromURL(arr){
     return arr.map(t=>{
@@ -160,11 +160,13 @@ module.exports = {
             
             try{
                 // const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=40')).data.results
-                // const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon')).data.results
-               const pokesArr = pokes
+                const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon')).data.results
+              
                 // let resultAPI = []
                 // for(let poke of pokesArr){
-                //     let subreq = await axios.get(poke.url)
+                //     let subreq = await axios.get(poke.url).then(res=>{
+                //         console.log(res.data.id)
+                //         return res})
                 //     resultAPI.push({
                 //         id: subreq.data.id,
                 //         name: subreq.data.name,
@@ -179,8 +181,8 @@ module.exports = {
                 for(let p of pokesArr){
                     promArr.push(axios.get(p.url))
                 }
-                let resultAPI = (await Promise.all(promArr)).map(poke => {
-                    // console.log(poke.data)
+                let resultAPI = (await Promise.all(promArr))
+                .map(poke => {
                     return ({
                         id: poke.data.id,
                         name: poke.data.name,
@@ -277,8 +279,8 @@ module.exports = {
                 attack,
                 defense
             })
-            await poke.addTypes(types) 
-            let id = poke.id//para añadir los tipos a la tabla intermedia 
+            await poke.addTypes(types) //para añadir los tipos a la tabla intermedia 
+            let id = poke.id
             let posted = (await Pokemon.findByPk(id ,{
                 attributes: {
                     exclude: ['createdAt', 'updatedAt']

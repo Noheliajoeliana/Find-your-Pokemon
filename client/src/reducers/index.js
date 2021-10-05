@@ -57,7 +57,6 @@ function Reducer(state = initialState, action){
                 }
             }
         case CREATE_POKEMON:
-            console.log('cree este poke: en reducer',action.payload)
             return {
                 ...state,
                 created: action.payload,
@@ -97,13 +96,13 @@ function Reducer(state = initialState, action){
             let filtrado1 = filterTypes(state.allPokemons,action.payload)
             return {
                 ...state,
-                pokemons:  filtrado1.length ? filtrado1 : 'No hay pokemones que coincidan'
+                pokemons:  filtrado1.length ? filtrado1 : ['No hay pokemones que coincidan']
             }
         case FILTER_DB_API:
             let filtrado2 = filterDB(state.allPokemons,action.payload)
             return {
                 ...state,
-                pokemons: filtrado2.length ? filtrado2 : 'No hay pokemones que coincidan'
+                pokemons: filtrado2.length ? filtrado2 : ['No hay pokemones que coincidan']
             }
         case CLEAR:
             return{

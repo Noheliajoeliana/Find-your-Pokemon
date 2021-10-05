@@ -1,6 +1,6 @@
 export function sortByName(array,tipo){
     let copy = [...array]
-    if(tipo==='A-Z'){
+    if(tipo==='Z-A'){
         return copy.sort((a,b) => {
             return a.name>b.name ? 1 : -1
         })
@@ -13,8 +13,7 @@ export function sortByName(array,tipo){
 
 export function sortByFuerza(array,tipo){
     let copy = [...array]
-    console.log(tipo==='^')
-    if(tipo==='^'){
+    if(tipo==='↓'){
         return copy.sort((a,b) => Number(a.hp)-Number(b.hp))
     }else{
         return copy.sort((a,b) => Number(b.hp)-Number(a.hp))
@@ -33,6 +32,8 @@ export function filterTypes(arr,tipos){
 export function filterDB(arr,tipo){
     if(tipo === 'DB'){
         return arr.filter(p=>(p.id).toString().length>10)
+    }else if(tipo === 'Todos'){
+        return arr
     }else{
         return arr.filter(p=>(p.id).toString().length<10)
     }
