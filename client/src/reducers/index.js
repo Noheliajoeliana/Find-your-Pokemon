@@ -16,7 +16,7 @@ const initialState = {
     allPokemons: [],
     pokemons: [],
     pokeDetail: {},
-    created: {},
+    created: {}, //quitar
     types: [],
     loading: {
         loading: false,
@@ -82,7 +82,6 @@ function Reducer(state = initialState, action){
                 pokemons: []
             }
         case SORT_POKES_NAME:
-            console.log(state.allPokemons)
             return {
                 ...state,
                 pokemons: sortByName(state.pokemons,action.payload)
@@ -96,13 +95,13 @@ function Reducer(state = initialState, action){
             let filtrado1 = filterTypes(state.allPokemons,action.payload)
             return {
                 ...state,
-                pokemons:  filtrado1.length ? filtrado1 : ['No hay pokemones que coincidan']
+                pokemons:  filtrado1.length ? filtrado1 : 'No hay pokemones que coincidan'
             }
         case FILTER_DB_API:
             let filtrado2 = filterDB(state.allPokemons,action.payload)
             return {
                 ...state,
-                pokemons: filtrado2.length ? filtrado2 : ['No hay pokemones que coincidan']
+                pokemons: filtrado2.length ? filtrado2 : 'No hay pokemones que coincidan'
             }
         case CLEAR:
             return{

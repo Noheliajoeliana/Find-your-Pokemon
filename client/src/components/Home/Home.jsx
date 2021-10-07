@@ -4,13 +4,9 @@ import SearchBar from "./HomeForms/SearchBar/SearchBar"
 import Orden from "./HomeForms/Orden/Orden"
 import Filtrado from "./HomeForms/Filtrado/Filtrado"
 import { Link } from "react-router-dom"
-import { useDispatch } from "react-redux"
 import { useState } from "react"
-import { clearAll} from "../../actions"
 
 export default function Home(){
-
-    const dispatch = useDispatch()
     
     const [page,setPage] = useState(1)
 
@@ -23,8 +19,11 @@ export default function Home(){
 
     return (
         <div>
+            <Link to='/'>
+                <button>Leave</button>
+            </Link>
             <h1>Pokemones</h1>
-            <Link to='/create'><button>Crear pokemon</button></Link>
+            <Link to='/create'><button>Create your own pokémon</button></Link>
             <SearchBar/>
             <Orden/>
             <Filtrado changePage={changePage}/>

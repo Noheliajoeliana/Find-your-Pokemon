@@ -24,9 +24,9 @@ export default function SearchBar(){
 
     return(
         <form onSubmit={search}>
-            <label>Busca tu pokemon</label>
+            <label>Search your Pokémon</label>
             <input onChange={changeName} type="text" name="nombre" id="" />
-            <input type="submit" disabled={input.disabled} value="Buscar" />
+            <input type="submit" disabled={input.disabled} value="Search" />
         </form>
     )
 }

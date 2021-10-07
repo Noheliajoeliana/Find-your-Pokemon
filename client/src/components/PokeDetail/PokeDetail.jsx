@@ -1,17 +1,20 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { getPokeDetail } from "../../actions"
 import { useEffect } from "react"
 
-export default function PokeDetail(params){
+export default function PokeDetail({id}){
 
     const dispatch = useDispatch()
     const pokemon = useSelector(state=>state.pokeDetail)
     const loading = useSelector(state=>state.loading)
     
+    console.log(pokemon)
+
     useEffect(() => {
-        if(pokemon.id!==params.props.match.params.id && !loading.loading){
-            dispatch(getPokeDetail(params.props.match.params.id))
+        if(pokemon.id!==id && !loading.loading){
+            dispatch(getPokeDetail(id))
         }
     })
     
@@ -23,6 +26,7 @@ export default function PokeDetail(params){
     }
     return (
         <div>
+            <Link to='/home'>X</Link>
             {loading.loading && loading.msg }
             {!loading.loading && pokemon.name &&
             <div>

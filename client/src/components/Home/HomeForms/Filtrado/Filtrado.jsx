@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getTypes, filterTypes,filterDB, clearAll} from "../../../../actions"
+import TypeButton from "./TypeButton"
+import DBAPIFilter from "./DBAPIFilter"
 
 export default function Filtrado({changePage}){
     
@@ -10,56 +12,60 @@ export default function Filtrado({changePage}){
         types: [],
         DBAPI: ''
     })
-
+    const[cleared,setCleared] = useState(true)
     const types = useSelector(state=>state.types)
 
     useEffect(()=>{
-        dispatch(getTypes())
+        if(!types.length) dispatch(getTypes())
     })
 
     function changeType(e){
+        e.preventDefault()
         if(input.types.includes(Number(e.target.id))){
             setInput({...input,types: input.types.filter(t=>t!==Number(e.target.id))})
         }else{
             setInput({...input,types:[...input.types,Number(e.target.id)]})
         }
+        setCleared(false)
     }
     function changeDB(e){
-        setInput({...input, DBAPI:e.target.value})
+        if(!input.DBAPI){
+            setInput({...input, DBAPI:e.target.value})
+        }else if(input.DBAPI === e.target.value){
+            setInput({...input, DBAPI:''})
+        }
+        setCleared(false)
     }
     function filter(e){
         e.preventDefault()
         if(input.types.length>0) dispatch(filterTypes(input.types));
         if(input.DBAPI) dispatch(filterDB(input.DBAPI));
+        setInput({...input,types:[]});
         changePage()
     }
     function clear(){
         dispatch(clearAll())
+        setInput({DBAPI:'',types:[]})
+        setCleared(true)
     }
 
     let typesForm = types.map(t=>{
         return (
-            <span onClick={changeType} key={t.id} id={t.id}>{t.name}   </span>
+            <TypeButton changeType={changeType} key={t.id} id={t.id} name={t.name} cleared={cleared}/>
         )
     })
+    
 
     return(
         <div>
-            <p>Filtrar tipos:</p>
-            <form>
-                {typesForm}
-            </form>
+            <p>Filtrar:</p>
             <form onSubmit={filter}>
-                <input onClick={changeDB} type="radio" id='DB'  name="DBAPI" value='DB'/>
-                <label for='DB' name='db'>DB</label>
-                <input onClick={changeDB} type="radio" id='API' name="DBAPI" value='API'/>
-                <label for='API' name='api'>API</label>
-                <input onClick={changeDB} type="radio" id='Todos' name="DBAPI" value='todos'/>
-                <label for='Todos' name='Todos'>Todos</label>
-                <input type="submit" value="Filtrar" />
+                {typesForm}
+                <DBAPIFilter changeDB={changeDB} clear={clear} cleared={cleared}/>
+                <input disabled={input.types.length || input.DBAPI ? false : true} type="submit" value="Filtrar" />
             </form>
             
-            <button onClick={clear}>Limpiar todos los filtros</button>
+            <button onClick={clear}>Clear all filters</button>
         </div>
     )
 }

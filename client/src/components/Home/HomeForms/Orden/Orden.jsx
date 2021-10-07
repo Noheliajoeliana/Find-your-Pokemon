@@ -12,7 +12,6 @@ export default function Orden({checked}){
     })
 
     function ordenarAlf(e){
-        console.log(e.target.name)
         setOrdenes({...ordenes, ordenAlf: ordenes.ordenAlf ==='A-Z' ? 'Z-A' : 'A-Z'}) 
         dispatch(sortAlf(ordenes.ordenAlf))
     }
@@ -23,9 +22,9 @@ export default function Orden({checked}){
 
     return(
         <div>
-                <p>Ordenar por:</p>
-                <button name='Alf' onClick={ordenarAlf}>{ordenes.ordenAlf}</button>
-                <button onClick={ordenarFuerza}>HP {ordenes.ordenHP}</button>
+                <p>Sort by:</p>
+                <button name='Alf' onClick={ordenarAlf}>Alphabet {ordenes.ordenAlf}</button>
+                <button onClick={ordenarFuerza}>Health Points {ordenes.ordenHP}</button>
 
             </div>
     )

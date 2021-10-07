@@ -257,15 +257,13 @@ module.exports = {
             
         }catch(err){
             return err.message.includes('404') 
-                // ? res.status(404).send('No se pudo encontrar al pokemon')
-                ? res.status(200).send('No se pudo encontrar al pokemon')
+                ? res.status(404).send('No se pudo encontrar al pokemon')
                 : res.status(500).send(`Server error: ${err}`)
         }
     },
 
     
     postPoke: async function(req, res){
-        //pokemon trae: _nombre_, vida, ataque, defensa, velocidad, _altura_, _peso_, _imagen_ tipos(array)
         try{
             const {name, weight, height, img, hp, speed, attack, defense, types} = req.body
             //creo un nuevo pokemon con los datos traídos

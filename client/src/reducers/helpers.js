@@ -32,9 +32,9 @@ export function filterTypes(arr,tipos){
 export function filterDB(arr,tipo){
     if(tipo === 'DB'){
         return arr.filter(p=>(p.id).toString().length>10)
-    }else if(tipo === 'Todos'){
-        return arr
-    }else{
+    }else if(tipo === 'API'){
         return arr.filter(p=>(p.id).toString().length<10)
+    }else{
+        return arr
     }
 }

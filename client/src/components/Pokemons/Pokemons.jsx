@@ -1,6 +1,5 @@
-import React from "react"
-import {useEffect } from "react"
-import {  useSelector , useDispatch} from "react-redux"
+import React, { useEffect } from "react"
+import { useSelector, useDispatch} from "react-redux"
 import {getAllPokemons} from "../../actions"
 import Pokemon from '../Pokemon/Pokemon.jsx'
 import Page from "../Page/Page"
@@ -23,10 +22,16 @@ export default function Pokemons({page, clickPage}){
     
     
 
-    let pokesPerPage = pokemons.slice(page*9-9,page*9)
+    let pokesPerPage 
+    if(page===1){
+        pokesPerPage = pokemons.slice(0,9)
+    }else {
+        pokesPerPage = pokemons.slice(page*12-15,page*12-3)
+
+    }
 
     let pokes = Array.isArray(pokesPerPage) ? pokesPerPage.map(poke => {
-        return <Pokemon content={poke} />    
+        return <Pokemon key={poke.id} poke={poke} />    
     }) : <p>{pokemons}</p>
 
 
@@ -35,7 +40,7 @@ export default function Pokemons({page, clickPage}){
             <h1>Contenedor de muchos pokemones </h1>
             {loading.loading && loading.msg}
             {pokes}
-            {Array.isArray(pokemons) && <Page cantPokes = {pokemons.length} clickPage={clickPage}/>}
+            {Array.isArray(pokemons) && pokesPerPage.length > 5 && <Page cantPokes = {pokemons.length} clickPage={clickPage}/>}
         </div>
     )
 }

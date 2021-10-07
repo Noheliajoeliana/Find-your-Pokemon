@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <Route exact path='/' component={Landing}/>
       <Route exact path='/home' component={Home}/>
-      <Route exact path='/details/:id' render={(props)=><PokeDetail props={props}/>}/>
+      <Route exact path='/details/:id' render={({match})=><PokeDetail id={match.params.id}/>}/>
       <Route exact path='/create' component={PokeCreate}/>
 
     </div>

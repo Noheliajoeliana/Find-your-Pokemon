@@ -24,7 +24,7 @@ export function getAllPokemons(){
 
 export function getPokeDetail(id){
     return function(dispatch){
-        dispatch({type: LOADING, payload: 'Buscando Pokémon...'})
+        dispatch({type: LOADING, payload: 'Searching Pokémon...'})
         return axios.get(`http://localhost:3001/pokemons/${id}`)
                     .then(res=>res.data)
                     .then(res=>dispatch({type: GET_POKE_DETAILS, payload: res}))
@@ -32,21 +32,25 @@ export function getPokeDetail(id){
 }
 
 export function getPokeName(name){
-    return function(dispatch){
-        dispatch({type: LOADING, payload: 'Buscando Pokémon...'})
-        return axios.get(`http://localhost:3001/pokemons?name=${name}`)
-                    .then(res=>res.data)
-                    .then(res=>dispatch({type: GET_POKE_NAME, payload: res}))
+    return async function(dispatch){
+        dispatch({type: LOADING, payload: 'Searching Pokémon...'})
+        let respuesta
+        try{
+            respuesta = await axios.get(`http://localhost:3001/pokemons?name=${name}`)
+        }catch(err){
+            dispatch({type:GET_POKE_NAME, payload:'There are no Pokémons with that name'})
+        }
+        if(respuesta)
+        return dispatch({type: GET_POKE_NAME, payload: respuesta.data})
     }
 }
 
 export function createPokemon(pokeObj){
     return function(dispatch){
-        dispatch({type: LOADING, payload: 'Posteando Pokémon...'})
+        dispatch({type: LOADING, payload: 'Creating Pokémon...'})
         axios.post('http://localhost:3001/pokemons', pokeObj)
                     .then(response => response.data)
                     .then(data=> {
-                        console.log('data:',data)
                         dispatch({type: CREATE_POKEMON, payload: data})
                     })
     }
