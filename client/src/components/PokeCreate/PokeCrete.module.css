@@ -1,0 +1,174 @@
+.body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.home{
+    text-decoration: none;
+    position: fixed;
+    top:1rem;
+    right: 1rem;
+    background-image: url('https://raw.githubusercontent.com/itsjavi/pokemon-assets/a7d8cec4f637f886ef4f15a370508370bfca927e/assets/svg/pokeball-banner.svg');
+    width: 6.2rem;
+    font-family: 'Play';
+    letter-spacing: 0.6rem;
+    font-weight: 600;
+    color: #3972B8;
+    border-radius: 5rem;
+    background-repeat: no-repeat;
+    padding-left: 0.4rem;
+}
+.home:hover{
+    cursor: pointer;
+    color: #E42E2D;
+    box-shadow: 0 0 10px #000000;
+}
+
+.title{
+    margin: 0;
+    font-family: 'Play', sans-serif;
+    font-size: 2.5rem;
+    color: #3972B8;
+}
+.form{
+    height: 75vh;
+    width: 30rem;
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    align-items: center;
+    position: relative;
+}
+.required{
+    position: fixed;
+    top: 5rem;
+    left: 28rem;
+}
+.label{
+    font-family: 'Play', sans-serif;
+    font-size: 1.3rem;
+}
+.sec{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.7rem;
+    align-items: center;
+}
+.input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 80%;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+}
+.input:focus{
+    outline: none;
+}
+.inperror{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+.error{
+    font-family: 'Play',sans-serif;
+    font-size: 0.8rem;
+    color: tomato;
+    font-weight: 700;
+    height: 1rem;
+}
+
+.selected{
+    max-width: 18rem;
+    height: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    border-radius: 1rem;
+    background-color: rgb(224, 218, 224);
+}
+.selected::-webkit-scrollbar {
+    width: 4px;
+}
+.selected::-webkit-scrollbar-thumb {
+    background: #8f8f8f;
+    border-radius: 4px;
+}
+.sectypes{
+    justify-content: flex-start;
+}
+.select{
+    background-color: transparent;
+    margin: 0 1rem;
+    border: none ;
+    font-family: 'Raleway',sans-serif;
+    font-weight: 700;
+}
+.select:focus{
+    outline: none;
+}
+.select::-webkit-scrollbar {
+    width: 4px;
+}
+.select::-webkit-scrollbar-thumb {
+    background: #8f8f8f;
+    border-radius: 4px;
+}
+
+.type{
+    font-family: 'Raleway',sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    width: 5rem;
+    margin: 0.3rem;
+}
+.x{
+    font-size: 0.9rem;
+    background-color: transparent;
+    border: none;
+    color: tomato;
+    font-weight: 700;
+    padding: 0;
+}
+.x:hover{
+    cursor: pointer;
+}
+
+.option{
+    font-weight: 700;
+}
+
+.boton{
+    background-color: #ff6347;
+    border: none;
+    font-family: 'Play', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 3rem;
+    padding: 0.5rem 0.3rem;
+    width: 10rem;
+}
+.boton:hover{
+    cursor: pointer;
+}
+.boton:disabled{
+    border: 1px solid grey;
+    background-color: transparent;
+    color:gray;
+}
+.boton:disabled:hover{
+    cursor: auto;
+}
+
+.loading{
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    color: tomato;
+    margin: 0;
+}

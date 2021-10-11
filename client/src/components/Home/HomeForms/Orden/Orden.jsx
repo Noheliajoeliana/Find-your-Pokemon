@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import { useDispatch } from "react-redux"
 import { sortAlf, sortFuerza } from "../../../../actions"
+import clases from './Orden.module.css'
 
 export default function Orden({checked}){
     
@@ -21,11 +22,10 @@ export default function Orden({checked}){
     }
 
     return(
-        <div>
-                <p>Sort by:</p>
-                <button name='Alf' onClick={ordenarAlf}>Alphabet {ordenes.ordenAlf}</button>
-                <button onClick={ordenarFuerza}>Health Points {ordenes.ordenHP}</button>
-
-            </div>
+        <div className={clases.order}>
+            <p className={clases.sort}>Sort by:</p>
+            <button className={clases.boton} onClick={ordenarAlf}>Alphabet {ordenes.ordenAlf}</button>
+            <button className={clases.boton} onClick={ordenarFuerza}>Health Points {ordenes.ordenHP}</button>
+        </div>
     )
 }

@@ -1,0 +1,55 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label{
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+}
+
+.busca{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 15rem;
+}
+
+.input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 1rem 0;
+    font-family: 'Raleway', sans-serif;
+    width: 9rem;
+    color: black;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.input:focus{
+    outline: none;
+}
+
+.boton{
+    border: none;
+    background-color: transparent;
+    border-radius: 3rem;
+    height: 2rem;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    background-color: #3972B8;
+    color: rgb(243, 232, 238);
+}
+.boton:hover{
+    cursor: pointer;
+}
+.boton:disabled{
+    border: 1px solid grey;
+    background-color: transparent;
+    color:gray;
+}
+.boton:disabled:hover{
+    background-color: transparent;
+    cursor: auto;
+}

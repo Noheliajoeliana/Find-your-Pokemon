@@ -3,8 +3,10 @@ import Pokemons from "../Pokemons/Pokemons"
 import SearchBar from "./HomeForms/SearchBar/SearchBar"
 import Orden from "./HomeForms/Orden/Orden"
 import Filtrado from "./HomeForms/Filtrado/Filtrado"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { useState } from "react"
+import clases from './Home.module.css'
+import Logo from '../../Imagenes/Logo.png'
 
 export default function Home(){
     
@@ -18,17 +20,31 @@ export default function Home(){
     }
 
     return (
-        <div>
-            <Link to='/'>
-                <button>Leave</button>
-            </Link>
-            <h1>Pokemones</h1>
-            <Link to='/create'><button>Create your own pokémon</button></Link>
-            <SearchBar/>
-            <Orden/>
-            <Filtrado changePage={changePage}/>
+        <div className={clases.container}>
+            <div className={clases.nav}>
+                
+                <div className={clases.logo}>
+                    <h1 className={clases.title}>Find your</h1>
+                    <img className={clases.loguito} src={Logo} alt="Poke Logo" />
+                </div>
 
-            <Pokemons page={page} clickPage={clickPage}/>
+                <NavLink to='/' >
+                    <button className={clases.leave}>Leave</button>
+                </NavLink>
+                
+            </div>
+
+            <div className={clases.main}>
+                <div className={clases.filters}>
+                    <SearchBar changePage={changePage}/>
+                    <Orden/>
+                    <Filtrado changePage={changePage}/>
+                    <NavLink to='/create' >
+                        <button className={clases.crear}>Create your own pokémon</button>
+                    </NavLink>
+                </div>
+                <Pokemons page={page} clickPage={clickPage}/>
+            </div>
         </div>
     )
 }

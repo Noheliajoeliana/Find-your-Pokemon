@@ -3,6 +3,8 @@ import { useSelector, useDispatch} from "react-redux"
 import {getAllPokemons} from "../../actions"
 import Pokemon from '../Pokemon/Pokemon.jsx'
 import Page from "../Page/Page"
+import clases from './Pokemons.module.css'
+import NotFound from '../../Imagenes/notFound.png'
 
 
 
@@ -21,7 +23,6 @@ export default function Pokemons({page, clickPage}){
     })
     
     
-
     let pokesPerPage 
     if(page===1){
         pokesPerPage = pokemons.slice(0,9)
@@ -32,15 +33,23 @@ export default function Pokemons({page, clickPage}){
 
     let pokes = Array.isArray(pokesPerPage) ? pokesPerPage.map(poke => {
         return <Pokemon key={poke.id} poke={poke} />    
-    }) : <p>{pokemons}</p>
+    }) : <div >
+            <p className={clases.msg}>{pokemons}</p>
+            <img className={clases.notFound} src={NotFound} alt="" />
+        </div> 
 
 
     return(
-        <div>
-            <h1>Contenedor de muchos pokemones </h1>
-            {loading.loading && loading.msg}
+        <div className={clases.pokemons} >
+            {Array.isArray(pokemons) && pokemons.length > 9 
+            && <Page cantPokes = {pokemons.length} clickPage={clickPage} page={page}/>}
+
+            {loading.loading && 
+            <div className={clases.loading}>
+                <span className={clases.msg}>{loading.msg}</span>
+                <img className={clases.loadingimg} src='https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/pokeball.svg' alt="" />
+            </div>}
             {pokes}
-            {Array.isArray(pokemons) && pokesPerPage.length > 5 && <Page cantPokes = {pokemons.length} clickPage={clickPage}/>}
         </div>
     )
 }

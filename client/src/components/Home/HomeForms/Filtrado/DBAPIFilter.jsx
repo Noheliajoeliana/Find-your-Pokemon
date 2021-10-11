@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import clases from './DBAPIFilter.module.css'
 
 
 export default function DBAPIFilter({changeDB,cleared}){
@@ -26,8 +27,11 @@ export default function DBAPIFilter({changeDB,cleared}){
     
     return(
         <div>
-            <input disabled={disabled.DB} onClick={click} type="button" name="DBAPI" value='DB'/>
-            <input disabled={disabled.API} onClick={click} type="button" name="DBAPI" value='API'/>
+            <input className={`${clases.boton} ${disabled.API && clases.active} ${disabled.DB && clases.disabled}`} 
+                   disabled={disabled.DB} onClick={click} type="button" name="DBAPI" value='DB'/>
+
+            <input className={`${clases.boton} ${disabled.DB && clases.active} ${disabled.API && clases.disabled}`} 
+                   disabled={disabled.API} onClick={click} type="button" name="DBAPI" value='API'/>
         </div>
     )
 }

@@ -1,0 +1,30 @@
+.boton{
+    background-color: #3972B8;
+    border-radius: 3rem;
+    border: 1px solid transparent;
+    padding: 0.5rem;
+    margin: 0.2rem 0.1rem;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    width: 4rem;
+    color:#F3E8EE
+}
+
+.boton:hover{
+    cursor: pointer;
+}
+.boton:active{
+    transform: translateY(1px);
+}
+
+.active{
+    background-color: tomato;
+}
+.boton:disabled{
+    border: 1px solid grey;
+    background-color: transparent;
+    color: grey;
+}
+.boton:disabled:hover{
+    cursor: auto;
+}

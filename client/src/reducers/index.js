@@ -7,6 +7,7 @@ import {GET_POKEMONS,
     SORT_POKES_NAME, 
     SORT_POKES_FUERZA,
     CLEAR,
+    CLEAR_DETAIL,
     FILTER_TYPES,
     FILTER_DB_API,
     GET_POKE_NAME} from '../actions'
@@ -16,7 +17,6 @@ const initialState = {
     allPokemons: [],
     pokemons: [],
     pokeDetail: {},
-    created: {}, //quitar
     types: [],
     loading: {
         loading: false,
@@ -37,6 +37,7 @@ function Reducer(state = initialState, action){
                 }
             }
         case GET_POKE_DETAILS:
+            
             return {
                 ...state,
                 pokeDetail: action.payload,
@@ -59,9 +60,8 @@ function Reducer(state = initialState, action){
         case CREATE_POKEMON:
             return {
                 ...state,
-                created: action.payload,
-                pokemons: [],
-                allPokemons: [],
+                pokemons: [action.payload,...state.allPokemons],
+                allPokemons: [action.payload,...state.allPokemons],
                 loading: {
                     loading:false,
                     msg:''
@@ -82,9 +82,12 @@ function Reducer(state = initialState, action){
                 pokemons: []
             }
         case SORT_POKES_NAME:
-            return {
+            return state.pokemons ? 
+            {
                 ...state,
                 pokemons: sortByName(state.pokemons,action.payload)
+            } : {
+                ...state
             }
         case SORT_POKES_FUERZA:
             return {
@@ -107,6 +110,11 @@ function Reducer(state = initialState, action){
             return{
                 ...state,
                 pokemons: [...state.allPokemons]
+            }
+        case CLEAR_DETAIL:
+            return{
+                ...state,
+                pokeDetail: {}
             }
         default:  
             return {...state}

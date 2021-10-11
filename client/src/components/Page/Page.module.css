@@ -1,0 +1,21 @@
+.pages{
+    position: fixed;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.numpage{
+    font-family: 'Play', sans-serif;
+    font-size: 1.3rem;
+    padding: 0.5rem;
+}
+.numpage:hover{
+    cursor: pointer;
+}
+.active{
+    font-weight: 700;
+    color: #3972B8;
+    background-color: #ffffff80;
+    border-radius: 3rem;
+}

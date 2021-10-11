@@ -1,7 +1,9 @@
-import React,{useState, useEffect} from "react"
+import React,{useState, useEffect, useRef} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createPokemon, getTypes} from "../../actions"
 import { Link } from "react-router-dom"
+import clases from './PokeCrete.module.css'
+import { firstMayus, notEmptyStr, notMinus, firstNaN, notZero } from "./Formhelp"
 
 export default function PokeDetail(){
     
@@ -12,7 +14,6 @@ export default function PokeDetail(){
 
     const [inputs,setInputs] = useState({
         name: '',
-        img: '',
         weight: '',
         height: '',
         hp: '',
@@ -32,15 +33,17 @@ export default function PokeDetail(){
         types: '',
     })
     const [valid,setValid] = useState(false)
-
+    const imgRef = useRef('')
     
     function submit(e){
         e.preventDefault() 
-        if(!Object.values(inputs).includes(null) || inputs.types.length){
-            dispatch(createPokemon(inputs))
+        if(notEmptyStr(inputs) && inputs.types.length){
+            dispatch(createPokemon({
+                ...inputs,
+                img: imgRef.current.value
+            }))
             setInputs({
                 name: '',
-                img: '',
                 weight: '',
                 height: '',
                 hp: '',
@@ -49,17 +52,22 @@ export default function PokeDetail(){
                 speed: '',
                 types: []
             })
-         
+            imgRef.current.value=''
+            setValid(false)
         }
     }
 
     function addType(e){
-        if(!inputs.types.includes(Number(e.target.value)) && e.target.value !== 'Select'){
+        if(!inputs.types.includes(Number(e.target.value)) 
+        && e.target.value !== 'Select'){
             setInputs({
                 ...inputs,
                 types: [...inputs.types,Number(e.target.value)]
             })
-            if(!Object.values(inputs).includes('')){
+            if(notEmptyStr(inputs)
+            && firstNaN(inputs.name[0]) 
+            && notMinus(inputs)
+            && notZero(inputs)){
                 setValid(true)
                 setErrors({
                     ...errors,
@@ -80,20 +88,19 @@ export default function PokeDetail(){
             ...inputs,
             [e.target.name]:e.target.value
         })
-
-        setValid(!Object.values({
-            ...inputs, 
-            [e.target.name]:e.target.value
-        }).includes('') ? true : false)
         
         if(e.target.type === 'number'){
             if(e.target.value < 0){
                 setValid(false)
-                setErrors({...errors, [e.target.name]: `${e.target.name} can not be negative`})
-            }else if(e.target.value === '0'){
+                setErrors({...errors, [e.target.name]: `${firstMayus(e.target.name)} can not be negative`})
+            }else if(Number(e.target.value) === 0){
                 setValid(false)
-                setErrors({...errors, [e.target.name]: `${e.target.name} can not be zero!`})
-            }else if(!Object.values({...inputs, [e.target.name]:e.target.value}).includes('') && inputs.types.length){
+                setErrors({...errors, [e.target.name]: `${firstMayus(e.target.name)} can not be zero!`})
+            }else if(notEmptyStr({...inputs, [e.target.name]:e.target.value}) 
+            && notMinus({...inputs, [e.target.name]:e.target.value})
+            && notZero({...inputs, [e.target.name]:e.target.value})
+            && firstNaN(inputs.name[0]) 
+            && inputs.types.length){
                 setValid(true)
                 setErrors({...errors, [e.target.name]:''})
             }else{
@@ -101,10 +108,14 @@ export default function PokeDetail(){
                 setErrors({...errors, [e.target.name]:''})
             }
         }else if(e.target.name==='name'){
-            if(!Number.isNaN(Number(e.target.value)) && e.target.value!==''){
+            if(!firstNaN(e.target.value) 
+            && e.target.value!==''){
                 setValid(false)
-                setErrors({...errors, [e.target.name]:`${e.target.name} can not be a pure number`})
-            }else if(!Object.values({...inputs, [e.target.name]:e.target.value}).includes('') && inputs.types.length){
+                setErrors({...errors, [e.target.name]:`${firstMayus(e.target.name)} can not be a pure number`})
+            }else if(notEmptyStr({...inputs, name:e.target.value})
+            && notMinus({...inputs, name:e.target.value})
+            && notZero(inputs)
+            && inputs.types.length){
                 setValid(true)
                 setErrors({...errors,[e.target.name]:''})
             }else{
@@ -113,6 +124,7 @@ export default function PokeDetail(){
             }
         }
     }
+
     function removeType(e){
         e.preventDefault()
         let filtered = inputs.types.filter(id=>id!==Number(e.target.id))
@@ -126,7 +138,9 @@ export default function PokeDetail(){
                 ...errors,
                 types: 'You must add at least one type'
             })
-        }else if(!Object.values(inputs).includes('')){
+        }else if(notEmptyStr(inputs)
+        && notMinus(inputs) 
+        && firstNaN(inputs.name[0])){
             setValid(true)
             setErrors({
                 ...errors,
@@ -142,8 +156,8 @@ export default function PokeDetail(){
     let typesOptions
     if(types){
         typesOptions = types.map(t=>{
-            return <option key={t.id} id={t.name} value={t.id}>
-                {t.name}
+            return <option className={clases.option} key={t.id} id={t.name} value={t.id}>
+                {firstMayus(t.name)}
             </option>
         })
     }
@@ -151,52 +165,73 @@ export default function PokeDetail(){
     let typesSelected
     if(inputs.types.length){
         typesSelected = inputs.types.map(tID => {
+
             let tName = types.find(t=>t.id===tID)
             tName = tName && tName.name
-            return <span key={tID}>{tName} <button id={tID} onClick={removeType}>X</button></span>
+            
+            return <span className={clases.type} key={tID}>{firstMayus(tName)} <button className={clases.x} id={tID} onClick={removeType}>X</button></span>
         })
     }
+
+    let inputsNumber = ['weight','height','attack','speed','defense'].map(p=>(
+        <div className={clases.sec}>
+            <label className={clases.label}><span className={clases.x}>*</span> {firstMayus(p)}</label>
+            <div className={clases.inperror}>
+                <input className={clases.input} onChange={changeTextNumber} type="number" name={p} id={p} value={inputs[p]}/>
+                <span className={clases.error}>{errors[p]}</span>
+            </div>
+        </div>
+    ))
     
     return (
-        <div>
-            <Link to='/home'>X</Link>
-            <h1>Create your own Pokémon</h1>
-            <form onSubmit={submit} autoComplete='off'>
-                <label >Name</label>
-                <input onChange={changeTextNumber} type="text" name="name" id="name" value={inputs.name}/>
-                <span>{errors.name}</span>
-                <label >Image</label>
-                <input onChange={changeTextNumber} type="text" name="img" id="img" value={inputs.img}/>
-                <span>{errors.img}</span>
-                <label >Weight</label>
-                <input onChange={changeTextNumber} type="number" name="weight" id="weight" value={inputs.weight}/>
-                <span>{errors.weight}</span>
-                <label >Height</label>
-                <input onChange={changeTextNumber} type="number" name="height" id="height" value={inputs.height}/>
-                <span>{errors.height}</span>
-                <label >Health Points</label>
-                <input onChange={changeTextNumber} type="number" name="hp" id="hp" value={inputs.hp}/>
-                <span>{errors.hp}</span>
-                <label >Attack</label>
-                <input onChange={changeTextNumber} type="number" name="attack" id="attack" value={inputs.attack}/>
-                <span>{errors.attack}</span>
-                <label >Speed</label>
-                <input onChange={changeTextNumber} type="number" name="speed" id="speed" value={inputs.speed}/>
-                <span>{errors.speed}</span>
-                <label >Defense</label>
-                <input onChange={changeTextNumber} type="number" name="defense" id="defense" value={inputs.defense}/>
-                <span>{errors.defense}</span>
-                <label >Types</label>
-                <select onClick={addType}>
-                    <option>Select</option>
-                    {typesOptions}
-                </select>
-                <div>
-                    {typesSelected}
+        <div className={clases.body}>
+            <Link to='/home' className={clases.home}>Home</Link>
+
+            <h1 className={clases.title}>Create your own Pokémon</h1>
+            <form onSubmit={submit} autoComplete='off' className={clases.form}>
+                <span className={`${clases.error} ${clases.required}`}>* Required</span>
+                <div className={clases.sec}>
+                    <label className={clases.label}> <span className={clases.x}>*</span> Name</label>
+                    <div className={clases.inperror}>
+                        <input className={clases.input} onChange={changeTextNumber} type="text" name="name" id="name" value={inputs.name}/>
+                        <span className={clases.error}>{errors.name}</span>
+                    </div>
                 </div>
-                <span>{errors.types}</span>
-                <input  disabled={!valid} type="submit" value="Create" />
-                {loading.loading && loading.msg}
+                
+                <div className={clases.sec}>
+                    <label className={clases.label}>  Image</label>
+                    <div className={clases.inperror}>
+                        <input className={clases.input} onChange={changeTextNumber} type="text" name="img" id="img" ref={imgRef} placeholder='Enter an url...'/>
+                    </div>
+                </div>
+                
+                {inputsNumber}
+                
+                <div className={clases.sec}>
+                    <label className={clases.label}><span className={clases.x}>*</span> Health Points</label>
+                    <div className={clases.inperror}>
+                        <input className={clases.input} onChange={changeTextNumber} type="number" name="hp" id="hp" value={inputs.hp}/>
+                        <span className={clases.error}>{errors.hp}</span>
+                    </div>
+                </div>
+                
+                <div className={`${clases.sec} ${clases.sectypes}`}>
+                    <label className={clases.label}><span className={clases.x}>*</span> Types</label>
+                    <select className={clases.select} onClick={addType}>
+                        <option>Select</option>
+                        {typesOptions}
+                    </select>
+                    <div className={clases.inperror}>
+                        <div className={clases.selected}>
+                            {typesSelected}
+                        </div>
+                        
+                        <span className={clases.error}>{errors.types}</span>
+                    </div>
+
+                </div>
+                <input className={clases.boton} disabled={!valid} type="submit" value="Create" />
+                {loading.loading && <span className={clases.loading}>{loading.msg}</span>}
             </form>
         </div>
     )

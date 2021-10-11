@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import clases from './TypeButton.module.css'
 
 
 export default function TypeButton({changeType,id,name,cleared}){
@@ -14,8 +15,8 @@ export default function TypeButton({changeType,id,name,cleared}){
             setChecked(false)
         }
     })
-
+    let nombre = name[0].toUpperCase()+name.slice(1)
     return (
-        <button onClick={click} id={id}>{name} </button>
+        <button className={`${clases.TypeButton} ${checked && clases.checked}`} onClick={click} id={id}>{nombre} </button>
     )
 }

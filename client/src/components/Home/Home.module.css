@@ -1,0 +1,73 @@
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    height: 5rem;
+    align-items: center;
+}
+
+.leave{
+    background-image: url('https://raw.githubusercontent.com/itsjavi/pokemon-assets/a7d8cec4f637f886ef4f15a370508370bfca927e/assets/svg/pokeball-banner.svg');
+    width: 8rem;
+    height: 1.5rem;
+    background-color: transparent;
+    border: none;
+    font-family: 'Play';
+    letter-spacing: 0.7rem;
+    font-weight: 600;
+    color: #3972B8;
+    border-radius: 5rem;
+    text-align: center;
+    padding: 0 1.5rem;
+    background-repeat: no-repeat;
+    margin-right: 2rem;
+}
+.leave:hover{
+    cursor: pointer;
+    color: #E42E2D;
+    box-shadow: 0 0 10px #000000;
+}
+.logo{
+    margin-left: 2rem;
+}
+.title{
+    letter-spacing: 0.1rem;
+    font-family: 'Play', sans-serif;
+    color: #3972B8;
+    font-size: 1rem;
+    margin:0;
+}
+.loguito{
+    width: 7rem;
+}
+
+.main{
+    height: 87vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filters{
+    width: 20rem;
+    margin: 0 2rem;
+}
+
+.crear{
+    background-color: #ff6347;
+    border: none;
+    font-family: 'Play', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 2rem 0 0;
+    border-radius: 3rem;
+    padding: 0.5rem 0.3rem;
+    width: 15rem;
+}
+.crear:hover{
+    cursor: pointer;
+}
+.crear:active{
+    background-color: #3972B8;
+    transform: translateY(1px);
+}

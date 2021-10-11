@@ -10,6 +10,7 @@ export const SORT_POKES_FUERZA = 'SORT_POKES_FUERZA'
 export const FILTER_TYPES = 'FILTER_TYPES'
 export const FILTER_DB_API = 'FILTER_DB_API'
 export const CLEAR = 'CLEAR'
+export const CLEAR_DETAIL = 'CLEAR_DETAIL'
 export const LOADING = 'LOADING'
 
 
@@ -23,11 +24,16 @@ export function getAllPokemons(){
 }
 
 export function getPokeDetail(id){
-    return function(dispatch){
+    return async function(dispatch){
         dispatch({type: LOADING, payload: 'Searching Pokémon...'})
-        return axios.get(`http://localhost:3001/pokemons/${id}`)
-                    .then(res=>res.data)
-                    .then(res=>dispatch({type: GET_POKE_DETAILS, payload: res}))
+        let respuesta
+        try{
+            respuesta = await axios.get(`http://localhost:3001/pokemons/${id}`)
+        }catch(err){
+            dispatch({type:GET_POKE_DETAILS,payload:'Pokemon Not Found'})
+        }
+        if(respuesta)
+        return dispatch({type: GET_POKE_DETAILS, payload: respuesta.data})
     }
 }
 
@@ -38,7 +44,7 @@ export function getPokeName(name){
         try{
             respuesta = await axios.get(`http://localhost:3001/pokemons?name=${name}`)
         }catch(err){
-            dispatch({type:GET_POKE_NAME, payload:'There are no Pokémons with that name'})
+            dispatch({type:GET_POKE_NAME, payload:`There are no Pokémons named: ${name[0].toUpperCase()+name.slice(1).toLowerCase()}`})
         }
         if(respuesta)
         return dispatch({type: GET_POKE_NAME, payload: respuesta.data})
@@ -81,5 +87,9 @@ export function filterDB(dbAPI){
 }
 
 export function clearAll(){
-    return {type: CLEAR, payload:''}
+    return {type: CLEAR}
+}
+
+export function clearDetail(){
+    return {type:CLEAR_DETAIL}
 }

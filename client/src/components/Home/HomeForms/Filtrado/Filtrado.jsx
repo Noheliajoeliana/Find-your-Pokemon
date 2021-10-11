@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getTypes, filterTypes,filterDB, clearAll} from "../../../../actions"
 import TypeButton from "./TypeButton"
 import DBAPIFilter from "./DBAPIFilter"
+import clases from './Filtrado.module.css'
 
 export default function Filtrado({changePage}){
     
@@ -40,7 +41,6 @@ export default function Filtrado({changePage}){
         e.preventDefault()
         if(input.types.length>0) dispatch(filterTypes(input.types));
         if(input.DBAPI) dispatch(filterDB(input.DBAPI));
-        setInput({...input,types:[]});
         changePage()
     }
     function clear(){
@@ -58,14 +58,19 @@ export default function Filtrado({changePage}){
 
     return(
         <div>
-            <p>Filtrar:</p>
-            <form onSubmit={filter}>
-                {typesForm}
+            <p className={clases.filterby}>Filter by:</p>
+            <form className={clases.form} onSubmit={filter}>
+                <div className={clases.types}>
+                    {typesForm}
+                </div>
                 <DBAPIFilter changeDB={changeDB} clear={clear} cleared={cleared}/>
-                <input disabled={input.types.length || input.DBAPI ? false : true} type="submit" value="Filtrar" />
+                
+                <div className={clases.botones}>
+                    <input className={clases.boton} disabled={input.types.length || input.DBAPI ? false : true} type="submit" value="Filtrar" />
+                    <button className={clases.boton} onClick={clear}>Clear all filters</button>
+                </div>
             </form>
             
-            <button onClick={clear}>Clear all filters</button>
         </div>
     )
 }

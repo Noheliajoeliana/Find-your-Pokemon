@@ -160,12 +160,11 @@ module.exports = {
             
             try{
                 // const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=40')).data.results
-                const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon')).data.results
+                const pokesArr = (await axios.get('https://pokeapi.co/api/v2/pokemon?limit=30')).data.results
               
                 // let resultAPI = []
                 // for(let poke of pokesArr){
                 //     let subreq = await axios.get(poke.url).then(res=>{
-                //         console.log(res.data.id)
                 //         return res})
                 //     resultAPI.push({
                 //         id: subreq.data.id,
@@ -187,7 +186,7 @@ module.exports = {
                         id: poke.data.id,
                         name: poke.data.name,
                         types: filterTypesFromURL(poke.data.types),
-                        img: poke.data.sprites.other.dream_world.front_default,
+                        img: poke.data.sprites.other.dream_world.front_default || 'https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/pokeball.svg',
                         hp: poke.data.stats[0].base_stat
                     })
                 })
@@ -267,11 +266,16 @@ module.exports = {
         try{
             const {name, weight, height, img, hp, speed, attack, defense, types} = req.body
             //creo un nuevo pokemon con los datos traídos
+            const dicIMG = ['svg','png','jpg']
+            let pimg = !img || !dicIMG.includes(img.slice(-3)) ? 
+                'https://raw.githubusercontent.com/itsjavi/pokemon-assets/master/assets/svg/pokeball.svg' :
+                img.trim()
+            
             const poke = await Pokemon.create({
                 name: name.toLowerCase().trim(),
                 height,
                 weight,
-                img,
+                img:pimg,
                 hp,
                 speed,
                 attack,
@@ -281,14 +285,14 @@ module.exports = {
             let id = poke.id
             let posted = (await Pokemon.findByPk(id ,{
                 attributes: {
-                    exclude: ['createdAt', 'updatedAt']
+                    exclude: ['createdAt', 'updatedAt','height','weight','speed','defense','attack',]
                 },
                 include: {
                     model: Type
                 }
             })).toJSON()
             posted = {...posted, types: mapTypes(posted.types)}
-            return res.send(posted)
+            return res.status(201).send(posted)
         }catch(err){
             res.status(500).send(`Server error: ${err}`)
         }
@@ -331,7 +335,6 @@ module.exports = {
             }
             return res.send(pokemon) 
         }catch(err){
-            console.log(err)
             return err.name.includes('Error') 
                 ? res.status(404).send('No se pudo encontrar al pokemon')
                 : res.status(500).send(`Server error: ${err}`)

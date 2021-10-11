@@ -1,0 +1,148 @@
+.body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.home{
+    text-decoration: none;
+    position: fixed;
+    top:1rem;
+    right: 1rem;
+    background-image: url('https://raw.githubusercontent.com/itsjavi/pokemon-assets/a7d8cec4f637f886ef4f15a370508370bfca927e/assets/svg/pokeball-banner.svg');
+    width: 6.2rem;
+    font-family: 'Play';
+    letter-spacing: 0.6rem;
+    font-weight: 600;
+    color: #3972B8;
+    border-radius: 5rem;
+    background-repeat: no-repeat;
+    padding-left: 0.4rem;
+}
+.home:hover{
+    cursor: pointer;
+    color: #E42E2D;
+    box-shadow: 0 0 10px #000000;
+}
+
+
+.msg{
+    font-family: 'Play', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: tomato;
+    margin: 0;
+}
+.loading{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loadingimg{
+    width: 12rem;
+    margin-top: 3rem;
+    animation: rotranslate 2s infinite ease-in alternate;
+}
+.container{
+    height: 80vh;
+    width: 50rem;
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.top{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 1rem;
+    margin-right: 2rem;
+}
+.id{
+    font-family: 'Play', sans-serif;
+    color: #3972B8;
+    width: 40%;
+    font-size: 2rem;
+    margin: 0;
+}
+.name{
+    margin: 0;
+    font-family: 'Play', sans-serif;
+    font-size: 3rem;
+    color: #3972B8;
+    width: 40%;
+    text-align: end;
+}
+
+.infocont{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 85%;
+}
+.img{
+    height: 20rem;
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+.att{
+    display: flex;
+    width: 15rem;
+    justify-content: space-between;
+    margin: 0px;
+    line-height: 2.5rem;
+}
+
+.typestitle{
+    font-family: 'Play', sans-serif;
+    font-size: 2rem;
+    margin: 1rem 0;
+    color: #3972B8;
+}
+.typecont{
+    display: flex;
+    max-width: 20rem;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    max-height: 5rem;
+    overflow-y: scroll;
+    margin-top: 0.3rem;
+}
+.typecont::-webkit-scrollbar {
+    width: 4px;
+}
+.typecont::-webkit-scrollbar-thumb {
+    background: #8f8f8f;
+    border-radius: 4px;
+}
+
+.type{
+    width: 6rem;
+}
+
+.error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.imgNotfound{
+    width: 20rem;
+}
+
+@keyframes rotranslate {
+    0%{
+        margin-right: -70%;
+        transform: rotateZ(0deg);
+    }
+    100%{
+        margin-left: -70%;
+        transform: rotateZ(-720deg);
+    }
+    
+}
