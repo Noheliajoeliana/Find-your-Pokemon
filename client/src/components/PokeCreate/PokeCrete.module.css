@@ -1,7 +1,7 @@
 .body{
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
 }
@@ -45,9 +45,9 @@
     position: relative;
 }
 .required{
-    position: fixed;
-    top: 5rem;
-    left: 28rem;
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
 }
 .label{
     font-family: 'Play', sans-serif;
@@ -91,7 +91,7 @@
     flex-wrap: wrap;
     overflow-y: scroll;
     border-radius: 1rem;
-    background-color: rgb(224, 218, 224);
+    background-color: #e0dae0;
 }
 .selected::-webkit-scrollbar {
     width: 4px;
@@ -106,9 +106,19 @@
 .select{
     background-color: transparent;
     margin: 0 1rem;
-    border: none ;
+    border: 1px solid transparent;
     font-family: 'Raleway',sans-serif;
     font-weight: 700;
+    border-radius: 1rem;
+}
+.select option{
+    background-color: #e0dae0;
+    font-family: 'Raleway',sans-serif;
+    font-weight: 700;
+}
+.select:hover{
+    cursor: pointer;
+    border: 1px solid gray;
 }
 .select:focus{
     outline: none;
@@ -140,9 +150,6 @@
     cursor: pointer;
 }
 
-.option{
-    font-weight: 700;
-}
 
 .boton{
     background-color: #ff6347;

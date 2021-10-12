@@ -71,3 +71,8 @@
     background-color: #3972B8;
     transform: translateY(1px);
 }
+
+.link{
+    width: 2rem;
+    margin: 1rem;
+}

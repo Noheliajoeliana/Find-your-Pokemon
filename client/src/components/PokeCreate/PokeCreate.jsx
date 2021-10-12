@@ -173,8 +173,8 @@ export default function PokeDetail(){
         })
     }
 
-    let inputsNumber = ['weight','height','attack','speed','defense'].map(p=>(
-        <div className={clases.sec}>
+    let inputsNumber = ['weight','height','attack','speed','defense'].map((p,i)=>(
+        <div className={clases.sec} key={i}>
             <label className={clases.label}><span className={clases.x}>*</span> {firstMayus(p)}</label>
             <div className={clases.inperror}>
                 <input className={clases.input} onChange={changeTextNumber} type="number" name={p} id={p} value={inputs[p]}/>
@@ -201,7 +201,7 @@ export default function PokeDetail(){
                 <div className={clases.sec}>
                     <label className={clases.label}>  Image</label>
                     <div className={clases.inperror}>
-                        <input className={clases.input} onChange={changeTextNumber} type="text" name="img" id="img" ref={imgRef} placeholder='Enter an url...'/>
+                        <input className={clases.input} onChange={changeTextNumber} type="text" name="img" id="img" ref={imgRef} placeholder='Enter a url...'/>
                     </div>
                 </div>
                 

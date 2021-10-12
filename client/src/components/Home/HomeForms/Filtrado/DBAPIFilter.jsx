@@ -23,7 +23,7 @@ export default function DBAPIFilter({changeDB,cleared}){
                 API:false
             })
         }
-    })
+    },[cleared,disabled])
     
     return(
         <div>

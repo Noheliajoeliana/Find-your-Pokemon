@@ -14,8 +14,10 @@ export default function TypeButton({changeType,id,name,cleared}){
         if(cleared && checked){
             setChecked(false)
         }
-    })
+    },[checked,cleared])
+
     let nombre = name[0].toUpperCase()+name.slice(1)
+    
     return (
         <button className={`${clases.TypeButton} ${checked && clases.checked}`} onClick={click} id={id}>{nombre} </button>
     )

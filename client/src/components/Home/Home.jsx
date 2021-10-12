@@ -3,10 +3,12 @@ import Pokemons from "../Pokemons/Pokemons"
 import SearchBar from "./HomeForms/SearchBar/SearchBar"
 import Orden from "./HomeForms/Orden/Orden"
 import Filtrado from "./HomeForms/Filtrado/Filtrado"
-import { NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useState } from "react"
 import clases from './Home.module.css'
 import Logo from '../../Imagenes/Logo.png'
+import linkedin from '../../Imagenes/linkedin.png'
+import github from '../../Imagenes/github.png'
 
 export default function Home(){
     
@@ -28,9 +30,9 @@ export default function Home(){
                     <img className={clases.loguito} src={Logo} alt="Poke Logo" />
                 </div>
 
-                <NavLink to='/' >
+                <Link to='/' >
                     <button className={clases.leave}>Leave</button>
-                </NavLink>
+                </Link>
                 
             </div>
 
@@ -39,9 +41,17 @@ export default function Home(){
                     <SearchBar changePage={changePage}/>
                     <Orden/>
                     <Filtrado changePage={changePage}/>
-                    <NavLink to='/create' >
+                    <Link to='/create' >
                         <button className={clases.crear}>Create your own pokémon</button>
-                    </NavLink>
+                    </Link>
+                    <div>
+                        <Link to='//linkedin.com/in/noheliarincon' target='blank'>
+                            <img className={clases.link} src={linkedin} alt="" />
+                        </Link>
+                        <Link to='//github.com/Noheliajoeliana' target='blank'>
+                            <img className={clases.link} src={github} alt="" />
+                        </Link>
+                    </div>
                 </div>
                 <Pokemons page={page} clickPage={clickPage}/>
             </div>
