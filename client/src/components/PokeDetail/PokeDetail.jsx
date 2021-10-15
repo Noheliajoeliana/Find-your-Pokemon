@@ -34,7 +34,7 @@ export default function PokeDetail({id}){
         })
     }
     return (
-        <div className={clases.body}>
+        <div className={`${clases.body} ${pokemon.id && clases[pokemon.types[0].name]}`}>
             <Link to='/home' onClick={clearDet} className={clases.home}>Home</Link>
             
             {loading.loading ? 

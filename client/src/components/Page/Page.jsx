@@ -5,7 +5,6 @@ import clases from './Page.module.css'
 export default function Page({cantPokes, clickPage, page}){
     let numPages = 1 + Math.ceil((cantPokes-9)/12)
 
-
     function click(e){
         clickPage(e)
     }

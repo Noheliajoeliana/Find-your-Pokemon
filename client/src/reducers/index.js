@@ -60,8 +60,8 @@ function Reducer(state = initialState, action){
         case CREATE_POKEMON:
             return {
                 ...state,
-                pokemons: [action.payload,...state.allPokemons],
-                allPokemons: [action.payload,...state.allPokemons],
+                pokemons: state.allPokemons.length ? [action.payload,...state.allPokemons] : [...state.allPokemons],
+                allPokemons: state.allPokemons.length ? [action.payload,...state.allPokemons] : [...state.allPokemons],
                 loading: {
                     loading:false,
                     msg:''

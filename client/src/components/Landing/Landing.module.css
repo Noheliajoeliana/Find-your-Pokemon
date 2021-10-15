@@ -41,7 +41,7 @@
 .botonGo:hover{
     cursor: pointer;
     color: #E42E2D;
-    animation: rotar 0.2s ease-out;
+    animation: rotar 0.3s ease-in;
     box-shadow: 0 0 10px #000000;
 }
 

@@ -8,8 +8,9 @@ export default function Pokemon({poke}){
     let pokeID = poke.id.length > 7 ? 'Created' : `#${poke.id}`
     let pokeName = poke.name[0].toUpperCase()+poke.name.slice(1)
 
+    
     return (
-        <div className={clases.pokeCard}>
+        <div className={`${clases.pokeCard} ${clases[poke.types[0].name]}`}>
             <Link to={`/details/${poke.id}`} >
                 <div className={clases.top}>
                     <span className={clases.id}>{pokeID}</span> 

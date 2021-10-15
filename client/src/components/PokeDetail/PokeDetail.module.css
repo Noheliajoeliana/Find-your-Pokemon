@@ -1,3 +1,27 @@
+
+:root {
+    --bluepok: rgb(57, 114, 184,0.3);
+	/* Color Main */
+	--initial: rgba(255, 255, 255, 0.5);
+    --grass: rgba(3, 192, 3, 0.3);
+    --fire: rgb(255, 166, 0, 0.3);
+    --ghost:rgba(255, 255, 255, 0.664);
+    --water:rgba(48, 69, 187, 0.3);
+    --electric:rgb(255, 255, 0,0.3);
+    --poison:rgb(128, 0, 128,0.3);
+    --bug: rgb(141, 175, 60, 0.3);
+    --ground: rgb(136, 78, 30,0.3);
+    --ice: rgb(0, 247, 255,0.3);
+    --dark: rgb(0, 0, 0,0.5);
+    --rock: rgb(88, 61, 53,0.3);
+    --unknown: transparent;
+    --steel: rgb(128, 128, 128,0.3);
+    --normal: rgb(255, 99, 71,0.3);
+    --fairy: rgb(255, 0, 255,0.3);
+    --dragon: rgb(255, 0, 0,0.3);
+    --psychic: rgba(0, 255, 149, 0.3);
+}
+
 .body{
     height: 100vh;
     display: flex;
@@ -135,14 +159,243 @@
     width: 20rem;
 }
 
-@keyframes rotranslate {
+.dark, .shadow{
+    animation: changecolordark 2s infinite ease;
+}
+.normal{
+    animation: changecolornormal 2s infinite ease;
+}
+.grass{
+    animation: changecolorgrass 2s infinite ease;
+}
+.fire{
+    animation: changecolorfire 2s infinite ease;
+}
+.water{
+    animation: changecolorwater 2s infinite ease;
+}
+.bug{
+    animation: changecolorbug 2s infinite ease;
+}
+.poison{
+    animation: changecolorpoison 2s infinite ease;
+}
+.electric{
+    animation: changecolorelectric 2s infinite ease;
+}
+.ground{
+    animation: changecolorground 2s infinite ease;
+}
+.ice{
+    animation: changecolorice 2s infinite ease;
+}
+.rock{
+    animation: changecolorrock 2s infinite ease;
+}
+.unknown{
+    animation: changecolorunknown 2s infinite ease;
+}
+.steel{
+    animation: changecolorsteel 2s infinite ease;
+}
+.ghost, .flying{
+    animation: changecolorghost 2s infinite ease;
+}
+.fairy{
+    animation: changecolorfairy 2s infinite ease;
+}
+.dragon, .fighting{
+    animation: changecolordragon 2s infinite ease;
+}
+.psychic{
+    animation: changecolorpsychic 2s infinite ease;
+}
+
+
+@keyframes changecolorgrass {
     0%{
-        margin-right: -70%;
-        transform: rotateZ(0deg);
+        background: linear-gradient(45deg, var(--initial), var(--grass));
+    }
+    50%{
+        background-color: var(--grass);
     }
     100%{
-        margin-left: -70%;
-        transform: rotateZ(-720deg);
+        background: linear-gradient(45deg, var(--initial), var(--grass));
     }
-    
+}
+@keyframes changecolorfire {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--fire));
+    }
+    50%{
+        background-color: var(--fire);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--fire));
+    }
+}
+@keyframes changecolorwater {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--water));
+    }
+    50%{
+        background-color: var(--water);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--water));
+    }
+}
+@keyframes changecolorground {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--ground));
+    }
+    50%{
+        background-color: var(--ground);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--ground));
+    }
+}
+@keyframes changecolorpoison {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--poison));
+    }
+    50%{
+        background-color: var(--poison);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--poison));
+    }
+}
+@keyframes changecolorbug {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--bug));
+    }
+    50%{
+        background-color: var(--bug);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--bug));
+    }
+}
+@keyframes changecolornormal {
+    0%{
+        background: linear-gradient(45deg, var(--bluepok), var(--normal));
+    }
+    50%{
+        background-color: var(--normal);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--bluepok), var(--normal));
+    }
+}
+@keyframes changecolorelectric {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--electric));
+    }
+    50%{
+        background-color: var(--electric);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--electric));
+    }
+}
+@keyframes changecolordark {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--dark));
+    }
+    50%{
+        background-color: var(--dark);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--dark));
+    }
+}
+@keyframes changecolorrock {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--rock));
+    }
+    50%{
+        background-color: var(--rock);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--rock));
+    }
+}
+@keyframes changecolorunknown {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--unknown));
+    }
+    50%{
+        background-color: var(--unknown);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--unknown));
+    }
+}
+@keyframes changecolorsteel {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--steel));
+    }
+    50%{
+        background-color: var(--steel);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--steel));
+    }
+}
+@keyframes changecolorghost {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--ghost));
+    }
+    50%{
+        background-color: var(--ghost);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--ghost));
+    }
+}
+@keyframes changecolorfairy {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--fairy));
+    }
+    50%{
+        background-color: var(--fairy);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--fairy));
+    }
+}
+@keyframes changecolordragon {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--dragon));
+    }
+    50%{
+        background-color: var(--dragon);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--dragon));
+    }
+}
+@keyframes changecolorice {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--ice));
+    }
+    50%{
+        background-color: var(--ice);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--ice));
+    }
+}
+@keyframes changecolorpsychic {
+    0%{
+        background: linear-gradient(45deg, var(--initial), var(--psychic));
+    }
+    50%{
+        background-color: var(--psychic);
+    }
+    100%{
+        background: linear-gradient(45deg, var(--initial), var(--psychic));
+    }
 }

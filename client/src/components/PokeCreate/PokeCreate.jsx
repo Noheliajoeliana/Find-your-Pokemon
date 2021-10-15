@@ -34,6 +34,7 @@ export default function PokeDetail(){
     })
     const [valid,setValid] = useState(false)
     const imgRef = useRef('')
+    console.log(imgRef.current.value)
     
     function submit(e){
         e.preventDefault() 
@@ -54,6 +55,8 @@ export default function PokeDetail(){
             })
             imgRef.current.value=''
             setValid(false)
+            console.log('inputs: ',inputs)
+            console.log('created: ',{...inputs,img:imgRef.current.value})
         }
     }
 
@@ -201,7 +204,7 @@ export default function PokeDetail(){
                 <div className={clases.sec}>
                     <label className={clases.label}>  Image</label>
                     <div className={clases.inperror}>
-                        <input className={clases.input} onChange={changeTextNumber} type="text" name="img" id="img" ref={imgRef} placeholder='Enter a url...'/>
+                        <input className={clases.input} type="text" name="img" id="img" ref={imgRef} placeholder='Enter a url...'/>
                     </div>
                 </div>
                 
